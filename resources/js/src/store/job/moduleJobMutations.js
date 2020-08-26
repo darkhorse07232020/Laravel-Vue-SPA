@@ -1,6 +1,6 @@
 /*=========================================================================================
-  File Name: moduleChat.js
-  Description: Chat Module
+  File Name: moduleChatMutations.js
+  Description: Chat Module Mutations
   ----------------------------------------------------------------------------------------
   Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
   Author: Pixinvent
@@ -8,15 +8,9 @@
 ==========================================================================================*/
 
 
-import state from './moduleChatState.js'
-import mutations from './moduleChatMutations.js'
-import actions from './moduleChatActions.js'
-import getters from './moduleChatGetters.js'
+import Vue from 'vue'
 
 export default {
-  namespaced: true,
-  state,
-  mutations,
-  actions,
-  getters
+  
 }
+

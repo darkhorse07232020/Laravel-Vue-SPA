@@ -15,6 +15,7 @@ import state from "./state"
 import getters from "./getters"
 import mutations from "./mutations"
 import actions from "./actions"
+import moduleJob from './job/moduleJob.js'
 
 Vue.use(Vuex)
 
@@ -23,5 +24,8 @@ export default new Vuex.Store({
     mutations,
     state,
     actions,
+    modules: {
+      test: moduleJob
+    },
     strict: process.env.NODE_ENV !== 'production'
 })

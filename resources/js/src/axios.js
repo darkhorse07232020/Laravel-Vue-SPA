@@ -1,9 +1,12 @@
 // axios
 import axios from 'axios'
 
-const baseURL = 'localhost:8000'
+const baseURL = 'http://localhost:8000'
 
 export default axios.create({
-  baseURL
+  baseURL,
   // You can add your headers here
+  headers: {
+      'type': `application/json`
+  }
 })

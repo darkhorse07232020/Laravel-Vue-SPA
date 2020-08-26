@@ -308,7 +308,10 @@
 
 		methods: {
 			testFunction () {
-				this.$store.dispatch('test/fetchContacts')
+				const payload = {
+					name: 'test'
+				}
+				this.$store.dispatch('test/fetchJob', payload)
 					.then(() => { this.$vs.loading.close() })
 					.catch(error => {
 					this.$vs.loading.close()

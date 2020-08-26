@@ -15,12 +15,10 @@ use Illuminate\Http\JsonResponse;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
-Route::get('/doc', function(){
-    return new JsonResponse([
-        'data' => 'OK'
-    ]);
+Route::get('/doc', function(Request $request){
+    return new JsonResponse(null, 204);
 });
