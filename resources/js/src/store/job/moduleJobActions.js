@@ -11,11 +11,11 @@ import axios from '@/axios.js'
 
 export default {
   // Get contacts from server. Also change in store
-  fetchJob ({ commit }, payload) {
+  fetchImage ({ commit }) {
     return new Promise((resolve, reject) => {
-      axios.get('/api/docs')
+      axios.get('/api/image')
         .then((response) => {
-          console.log(response.status);
+          console.log(response);
           resolve(response.status)
         })
         .catch((error) => { reject(error) })

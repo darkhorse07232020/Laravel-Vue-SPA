@@ -8,11 +8,20 @@
 				</div>
 				<div style="font-size:1em">
 					<div class="flex px-6 mb-6 item_center">
+						<div class="vx-col w-full">
+							<li v-for="(image, index) in images">
+								<vs-radio v-model="radios1" :vs-value="image.ID">
+									<vs-image :key="index" :src="image.logo_image_small" />
+								</vs-radio>
+							</li>
+						</div>
+					</div>
+					<div class="flex px-6 mb-6 item_center">
 						<div class="vx-col sm:w-1/4 w-full text_end">
 							<span><b>Style Group <span style="color:red">*</span></b></span>
 						</div>
 						<div class="vx-col sm:w-1/2 w-full">
-							<v-select :options="['foo','bar']" />
+							<!-- <v-select :options="style" v-for="(style, index) in style_group" :key="index" @click="" /> -->
 						</div>
 					</div>
 
@@ -305,25 +314,43 @@
 		data:()=>({
 			textarea: '',
 		}),
-
+		computed: {
+			images()
+		},
 		methods: {
-			testFunction () {
-				const payload = {
-					name: 'test'
-				}
-				this.$store.dispatch('test/fetchJob', payload)
-					.then(() => { this.$vs.loading.close() })
+			images() {
+				this.$store.dispatch('job/fetchImage')
+					.then(() => { return response.data })
 					.catch(error => {
-					this.$vs.loading.close()
-					this.$vs.notify({
-						title: 'Error',
-						text: error.message,
-						iconPack: 'feather',
-						icon: 'icon-alert-circle',
-						color: 'danger'
+						this.$vs.notify({
+							title: 'Error',
+							text: error.message,
+							iconPack: 'feather',
+							icon: 'icon-alert-circle',
+							color: 'danger'
+						})
+					})
+			},
+			style_group () {
+				this.$store.dispatch('job/fetchStyle')
+					.then(() => { return response.data })
+					.catch(error => {
+						this.$vs.notify({
+							title: 'Error',
+							text: error.message,
+							iconPack: 'feather',
+							icon: 'icon-alert-circle',
+							color: 'danger'
 					})
 				})
-			}
+			},
+			
+		},
+
+		created () {
+			this.$store.registerModule('job', moduleJob)
+		},
+		beforeDestroy () {
+			this.$store.unregisterModule('job')
 		}
-	}
 </script>

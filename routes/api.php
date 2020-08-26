@@ -15,10 +15,11 @@ use Illuminate\Http\JsonResponse;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
-Route::get('/doc', function(Request $request){
-    return new JsonResponse(null, 204);
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
 });
+
+Route::get('/job/image', 'JobController@index');
+// Route::get('/job/style', 'JobController@getStyle');
+// Route::get('/job/door', 'JobController@getDoor');
+
