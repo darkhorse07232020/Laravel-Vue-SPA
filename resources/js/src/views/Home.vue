@@ -21,7 +21,7 @@
 							<span><b>Style Group <span style="color:red">*</span></b></span>
 						</div>
 						<div class="vx-col sm:w-1/2 w-full">
-							<!-- <v-select :options="style" v-for="(style, index) in style_group" :key="index" @click="" /> -->
+							<v-select :options="[style]" v-for="(style, index) in images" :key="index" @change="" />
 						</div>
 					</div>
 
@@ -95,7 +95,7 @@
 					<div class="flex px-6 mb-2">
 						<div class="vx-col sm:w-1/4 w-full text_end"></div>
 						<div class="vx-col sm:w-1/2 w-full">
-							<vs-button type="relief" @click="testFunction">Price Sheet</vs-button>
+							<vs-button type="relief" @click="">Price Sheet</vs-button>
 						</div>
 					</div>
 				</div>
@@ -104,11 +104,11 @@
 		<div class="w-full md:w-1/3 px-4">
 			<vs-card vs-justify="center" vs-align="center">
 				<div slot="header">
-					<div class="flex px-6 mb-6 item_center">
-						<div class="vx-col sm:w-1/2 w-full px-4">
-							<span class="headText"><pre> Drawings</pre></span>
+					<div class="flex item_center">
+						<div class="vx-col sm:w-1/2 w-full">
+							<span class="headText"><pre>  Drawings</pre></span>
 						</div>
-						<div class="vx-col sm:w-1/2 w-full px-4">
+						<div class="vx-col sm:w-1/2 w-full">
 							<span class="headText"><pre> Door Options</pre></span>
 						</div>
 					</div>
@@ -315,42 +315,42 @@
 			textarea: '',
 		}),
 		computed: {
-			images()
-		},
-		methods: {
 			images() {
 				this.$store.dispatch('job/fetchImage')
-					.then(() => { return response.data })
-					.catch(error => {
-						this.$vs.notify({
-							title: 'Error',
-							text: error.message,
-							iconPack: 'feather',
-							icon: 'icon-alert-circle',
-							color: 'danger'
-						})
-					})
-			},
+					.then((response) => { console.log(response.data) })
+					// .catch(error => {
+					// 	this.$vs.notify({
+					// 		title: 'Error',
+					// 		text: error.message,
+					// 		iconPack: 'feather',
+					// 		icon: 'icon-alert-circle',
+					// 		color: 'danger'
+					// 	})
+					// })
+			}
+		},
+		methods: {
+			
 			style_group () {
 				this.$store.dispatch('job/fetchStyle')
 					.then(() => { return response.data })
-					.catch(error => {
-						this.$vs.notify({
-							title: 'Error',
-							text: error.message,
-							iconPack: 'feather',
-							icon: 'icon-alert-circle',
-							color: 'danger'
-					})
-				})
+					// .catch(error => {
+					// 	this.$vs.notify({
+					// 		title: 'Error',
+					// 		text: error.message,
+					// 		iconPack: 'feather',
+					// 		icon: 'icon-alert-circle',
+					// 		color: 'danger'
+					// })
+				// })
 			},
 			
 		},
-
 		created () {
-			this.$store.registerModule('job', moduleJob)
+			// this.$store.registerModule('job', moduleJob)
 		},
 		beforeDestroy () {
-			this.$store.unregisterModule('job')
+			// this.$store.unregisterModule('job')
 		}
+	}
 </script>

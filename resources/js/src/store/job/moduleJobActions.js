@@ -13,10 +13,9 @@ export default {
   // Get contacts from server. Also change in store
   fetchImage ({ commit }) {
     return new Promise((resolve, reject) => {
-      axios.get('/api/image')
+      axios.get('/api/job/image')
         .then((response) => {
-          console.log(response);
-          resolve(response.status)
+          resolve(response)
         })
         .catch((error) => { reject(error) })
     })

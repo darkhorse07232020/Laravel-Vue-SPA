@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+//Import Models
+use App\Model\Style\Style_brand;
+
+//Import Libraries
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 

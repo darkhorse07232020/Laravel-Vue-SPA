@@ -25,7 +25,7 @@ export default new Vuex.Store({
     state,
     actions,
     modules: {
-      test: moduleJob
+      job: moduleJob
     },
     strict: process.env.NODE_ENV !== 'production'
 })
