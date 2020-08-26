@@ -1,37 +1,326 @@
 <template>
-	<vs-row>
-		<vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
-			<vx-card
-				title="Gradient Background Image"
-				title-color="#fff"
-				content-color="#fff"
-				:card-background="'linear-gradient(120deg ,rgba(109,213,237,.8), rgba(33,147,176,0.5)), url(' + card_bg_img_1 + ')'"
-				>
-				<p class="mb-3">You can use <strong>card-background</strong> prop to change background of card. This prop supports hex, rgba, rgb and theme colors.</p>
-				<p class="mb-3">Oat cake powder sesame snaps. Chocolate bar dessert bonbon chocolate bar pudding apple pie muffin chocolate ice cream. I love bear claw I love.</p>
-			</vx-card>
-		</vs-col>
-		<vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
-			<vx-card
-				title="Gradient Background Image"
-				title-color="#fff"
-				content-color="#fff"
-				:card-background="'linear-gradient(120deg ,rgba(247,97,161,0.5), rgba(140,27,171,.8)), url(' + card_bg_img_2 + ')'"
-				>
-				<p class="mb-3">You can use <strong>card-background</strong> prop to change background of card. This prop supports hex, rgba, rgb and theme colors.</p>
-				<p class="mb-3">Oat cake powder sesame snaps. Chocolate bar dessert bonbon chocolate bar pudding apple pie muffin chocolate ice cream. I love bear claw I love.</p>
-			</vx-card>
-		</vs-col>
-	</vs-row>
+<div>
+	<div class="flex flex-wrap -mx-2">
+		<div class="w-full md:w-2/3 px-4">
+			<vs-card vs-justify="center" vs-align="center">
+				<div slot="header">
+					<span class="headText"><pre>  Doors & Drawers</pre></span>
+				</div>
+				<div style="font-size:1em">
+					<div class="flex px-6 mb-6 item_center">
+						<div class="vx-col sm:w-1/4 w-full text_end">
+							<span><b>Style Group <span style="color:red">*</span></b></span>
+						</div>
+						<div class="vx-col sm:w-1/2 w-full">
+							<v-select :options="['foo','bar']" />
+						</div>
+					</div>
+
+					<div class="flex px-6 mb-6 item_center">
+						<div class="vx-col sm:w-1/4 w-full text_end">
+							<span><b>Door <span style="color:red">*</span></b></span>
+						</div>
+						<div class="vx-col sm:w-1/2 w-full">
+							<v-select :options="['foo','bar']" />
+						</div>
+						<div class="vx-col sm:w-1/4 w-full px-2">
+							<vs-button type="flat" size="small" style="font-size: 0.9em; padding:0.5em 0.7em;">Options</vs-button>
+							<vs-button type="flat" size="small" style="font-size: 0.9em; padding:0.5em 0.7em;">Spec</vs-button>
+						</div>
+					</div>
+
+					<div class="flex px-6 mb-6 item_center">
+						<div class="vx-col sm:w-1/4 w-full text_end">
+							<span><b>Small Drawer <span style="color:red">*</span></b></span>
+						</div>
+						<div class="vx-col sm:w-1/2 w-full">
+							<v-select :options="['foo','bar']" />
+						</div>
+					</div>
+
+					<div class="flex px-6 mb-6 item_center">
+						<div class="vx-col sm:w-1/4 w-full text_end">
+							<span><b>Large Drawer <span style="color:red">*</span></b></span>
+						</div>
+						<div class="vx-col sm:w-1/2 w-full">
+							<v-select :options="['foo','bar']" />
+						</div>
+					</div>
+
+					<div class="flex px-6 mb-6 item_center">
+						<div class="vx-col sm:w-1/4 w-full text_end">
+							<span><b>Material <span style="color:red">*</span></b></span>
+						</div>
+						<div class="vx-col sm:w-1/2 w-full">
+							<v-select :options="['foo','bar']" />
+						</div>
+					</div>
+
+					<div class="flex px-6 mb-6 item_center">
+						<div class="vx-col sm:w-1/4 w-full text_end">
+							<span><b>Color/Pattern <span style="color:red">*</span></b></span>
+						</div>
+						<div class="vx-col sm:w-1/2 w-full">
+							<v-select :options="['foo','bar']" />
+						</div>
+					</div>
+
+					<div class="flex px-6 mb-6 item_center">
+						<div class="vx-col sm:w-1/4 w-full text_end">
+							<span><b>Finish <span style="color:red">*</span></b></span>
+						</div>
+						<div class="vx-col sm:w-1/2 w-full">
+							<v-select :options="['foo','bar']" />
+						</div>
+					</div>
+
+					<div class="flex px-6">
+						<div class="vx-col sm:w-1/4 w-full text_end">
+							<span><b>Header Note</b></span>
+						</div>
+						<div class="vx-col sm:w-1/2 w-full">
+							<vs-textarea v-model="textarea" height="100px" />
+						</div>
+					</div>
+
+					<div class="flex px-6 mb-2">
+						<div class="vx-col sm:w-1/4 w-full text_end"></div>
+						<div class="vx-col sm:w-1/2 w-full">
+							<vs-button type="relief" @click="testFunction">Price Sheet</vs-button>
+						</div>
+					</div>
+				</div>
+			</vs-card>
+		</div>
+		<div class="w-full md:w-1/3 px-4">
+			<vs-card vs-justify="center" vs-align="center">
+				<div slot="header">
+					<div class="flex px-6 mb-6 item_center">
+						<div class="vx-col sm:w-1/2 w-full px-4">
+							<span class="headText"><pre> Drawings</pre></span>
+						</div>
+						<div class="vx-col sm:w-1/2 w-full px-4">
+							<span class="headText"><pre> Door Options</pre></span>
+						</div>
+					</div>
+				</div>
+				<div style="font-size:1em">
+					<div class="flex px-6 mb-6 item_center">
+						<div class="vx-col sm:w-1/2 w-full px-4">
+							<vs-image :key="index" :src="`https://picsum.photos/400/400?image=2${index}`" v-for="(image, index) in 9" />
+						</div>
+						<div class="vx-col sm:w-1/2 w-full px-4">
+							<vs-image :key="index" :src="`https://picsum.photos/400/400?image=2${index}`" v-for="(image, index) in 9" />
+						</div>
+					</div>
+					<div class="flex px-6 mb-6 item_center">
+						<div class="vx-col sm:w-1/2 w-full px-4">
+							<span>Door</span>
+						</div>
+						<div class="vx-col sm:w-1/2 w-full px-4">
+							<span>Inside Profile</span>
+						</div>
+					</div>
+
+					<div class="flex px-6 mb-6 item_center">
+						<div class="vx-col sm:w-1/2 w-full px-4">
+							<vs-image :key="index" :src="`https://picsum.photos/400/400?image=2${index}`" v-for="(image, index) in 9" />
+						</div>
+						<div class="vx-col sm:w-1/2 w-full px-4">
+							<vs-image :key="index" :src="`https://picsum.photos/400/400?image=2${index}`" v-for="(image, index) in 9" />
+						</div>
+					</div>
+					<div class="flex px-6 mb-6 item_center">
+						<div class="vx-col sm:w-1/2 w-full px-4">
+							<span>Drawer</span>
+						</div>
+						<div class="vx-col sm:w-1/2 w-full px-4">
+							<span>Center Panel</span>
+						</div>
+					</div>
+
+					<div class="flex px-6 mb-6 item_center">
+						<div class="vx-col sm:w-1/2 w-full px-4">
+							<vs-image :key="index" :src="`https://picsum.photos/400/400?image=2${index}`" v-for="(image, index) in 9" />
+						</div>
+						<div class="vx-col sm:w-1/2 w-full px-4">
+							<vs-image :key="index" :src="`https://picsum.photos/400/400?image=2${index}`" v-for="(image, index) in 9" />
+						</div>
+					</div>
+					<div class="flex px-6 mb-6 item_center">
+						<div class="vx-col sm:w-1/2 w-full px-4">
+							<span>LG Drawer</span>
+						</div>
+						<div class="vx-col sm:w-1/2 w-full px-4">
+							<span>Outside Profile</span>
+						</div>
+					</div>
+
+					<div class="flex px-6 mb-6 item_center">
+						<div class="vx-col sm:w-1/2 w-full px-4">
+							<vs-image :key="index" :src="`https://picsum.photos/400/400?image=2${index}`" v-for="(image, index) in 9" />
+						</div>
+						<div class="vx-col sm:w-1/2 w-full px-4">
+							<vs-image :key="index" :src="`https://picsum.photos/400/400?image=2${index}`" v-for="(image, index) in 9" />
+						</div>
+					</div>
+					<div class="flex px-6 mb-6 item_center">
+						<div class="vx-col sm:w-1/2 w-full px-4">
+							<span>Hardware</span>
+						</div>
+						<div class="vx-col sm:w-1/2 w-full px-4">
+							<span>Stile/Rail</span>
+						</div>
+					</div>
+				</div>
+			</vs-card>
+		</div>
+	</div>
+
+	<div class="flex flex-wrap -mx-2">
+		<div class="w-full md:w-2/3 px-4">
+			<vs-card vs-justify="center" vs-align="center">
+				<div slot="header">
+					<span class="headText"><pre>  Cabinet Materials</pre></span>
+				</div>
+				<div style="font-size:1em">
+					<div class="flex px-6 mb-6 item_center">
+						<div class="vx-col sm:w-1/4 w-full text_end">
+							<span><b>Cabinet Box Material <span style="color:red">*</span></b></span>
+						</div>
+						<div class="vx-col sm:w-1/2 w-full">
+							<v-select :options="['foo','bar']" />
+						</div>
+					</div>
+
+					<div class="flex px-6 mb-6 item_center">
+						<div class="vx-col sm:w-1/4 w-full text_end">
+							<span><b>Drawer Box <span style="color:red">*</span></b></span>
+						</div>
+						<div class="vx-col sm:w-1/2 w-full">
+							<v-select :options="['foo','bar']" />
+						</div>
+					</div>
+
+					<div class="flex px-6 mb-3 item_center">
+						<div class="vx-col sm:w-1/4 w-full text_end">
+							<span><b>Hinges <span style="color:red">*</span></b></span>
+						</div>
+						<div class="vx-col sm:w-1/2 w-full">
+							<v-select :options="['foo','bar']" />
+						</div>
+					</div>
+					<hr>
+					<div class="flex px-6 mt-3 mb-6 item_center">
+						<div class="vx-col sm:w-1/4 w-full text_end">
+							<span><b>Fin End Material <span style="color:red">*</span></b></span>
+						</div>
+						<div class="vx-col sm:w-1/2 w-full">
+							<v-select :options="['foo','bar']" />
+						</div>
+					</div>
+
+					<div class="flex px-6 mb-6 item_center">
+						<div class="vx-col sm:w-1/4 w-full text_end">
+							<span><b>Fin End Color <span style="color:red">*</span></b></span>
+						</div>
+						<div class="vx-col sm:w-1/2 w-full">
+							<v-select :options="['foo','bar']" />
+						</div>
+					</div>
+
+					<div class="flex px-6 mb-6 item_center">
+						<div class="vx-col sm:w-1/4 w-full text_end">
+							<span><b>Fin End Finish <span style="color:red">*</span></b></span>
+						</div>
+						<div class="vx-col sm:w-1/2 w-full">
+							<v-select :options="['foo','bar']" />
+						</div>
+					</div>
+
+					<div class="flex px-6 mb-6 item_center">
+						<div class="vx-col sm:w-1/4 w-full text_end">
+							<span><b>Edge Banding <span style="color:red">*</span></b></span>
+						</div>
+						<div class="vx-col sm:w-1/2 w-full">
+							<v-select :options="['foo','bar']" />
+						</div>
+					</div>
+
+					<div class="flex px-6">
+						<div class="vx-col sm:w-1/4 w-full text_end">
+							<span><b>Admin Note</b></span>
+						</div>
+						<div class="vx-col sm:w-1/2 w-full">
+							<vs-textarea v-model="textarea" height="100px" />
+						</div>
+					</div>
+				</div>
+			</vs-card>
+		</div>
+		<div class="w-full md:w-1/3 px-4">
+			<vs-card vs-justify="center" vs-align="center">
+				<div slot="header">
+					<span class="headText"><pre>  Did you know?</pre></span>
+				</div>
+				<div style="font-size:1em; height: 150px !important">
+					<div class="flex px-6 mb-6 item_center">
+						<span>This is my first tip.</span>
+
+					</div>
+
+				</div>
+			</vs-card>
+
+			<vs-card vs-justify="center" vs-align="center">
+				<div slot="header">
+					<span class="headText"><pre>  Explore our Gallery</pre></span>
+				</div>
+				<div style="font-size:1em">
+					<div class="flex px-6 mb-6 item_center">
+						<div class="vx-col w-full px-4">
+							<vs-image :key="index" :src="`https://picsum.photos/400/400?image=2${index}`" v-for="(image, index) in 9" />
+						</div>
+						
+					</div>
+					<div class="flex px-6 mb-6 item_center">
+						<div class="vx-col w-full px-4">
+							<h3><a href="#">Visit Door Gallery</a></h3>
+						</div>
+					</div>
+				</div>
+			</vs-card>
+		</div>
+	</div>
+</div>
 </template>
 
 <script>
-export default{
-	data() {
-		return {
-			// card_bg_img_1: require('@assets/images/pages/card-bg-image-demo-1.jpg')
-			// card_bg_img_2: require('@assets/images/pages/card-bg-image-demo-2.jpg')
+	import vSelect from 'vue-select'
+
+	export default{
+		components: {
+			'v-select': vSelect
+		},
+		data:()=>({
+			textarea: '',
+		}),
+
+		methods: {
+			testFunction () {
+				this.$store.dispatch('test/fetchContacts')
+					.then(() => { this.$vs.loading.close() })
+					.catch(error => {
+					this.$vs.loading.close()
+					this.$vs.notify({
+						title: 'Error',
+						text: error.message,
+						iconPack: 'feather',
+						icon: 'icon-alert-circle',
+						color: 'danger'
+					})
+				})
+			}
 		}
 	}
-}
 </script>

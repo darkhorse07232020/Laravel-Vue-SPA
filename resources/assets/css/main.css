@@ -57,3 +57,16 @@
  * @import "utilities/background-patterns";
  * @import "utilities/skew-transforms";
  */
+
+ div.item_center {
+    align-items: center !important;
+ }
+
+ div.text_end {
+    text-align: end;
+    padding-right: 1em;
+ }
+
+ span.headText{
+    font-size: 1.2em;
+ }

@@ -1,7 +1,7 @@
 // axios
 import axios from 'axios'
 
-const baseURL = ''
+const baseURL = 'localhost:8000'
 
 export default axios.create({
   baseURL
