@@ -9,9 +9,4 @@ class Style_brand extends Model
     //
     protected $table = 'style_brand';
 
-    public function get_data()
-    {
-        $result = DB::table($table)->get();
-        return $result;
-    }
 }

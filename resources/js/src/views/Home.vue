@@ -9,11 +9,13 @@
 				<div style="font-size:1em">
 					<div class="flex px-6 mb-6 item_center">
 						<div class="vx-col w-full">
-							<li v-for="(image, index) in images">
-								<vs-radio v-model="radios1" :vs-value="image.ID">
-									<vs-image :key="index" :src="image.logo_image_small" />
-								</vs-radio>
-							</li>
+							<ul>
+								<li v-for="(image, index) in images" :key="image.ID">
+									<vs-radio >
+										<vs-image :key="index" :src="image.logo_image_small" />
+									</vs-radio>
+								</li>
+							</ul>
 						</div>
 					</div>
 					<div class="flex px-6 mb-6 item_center">
@@ -21,7 +23,7 @@
 							<span><b>Style Group <span style="color:red">*</span></b></span>
 						</div>
 						<div class="vx-col sm:w-1/2 w-full">
-							<v-select :options="[style]" v-for="(style, index) in images" :key="index" @change="" />
+							<v-select :options="[style.ID]" v-for="(style, index) in images" :key="index" @change="" />
 						</div>
 					</div>
 
@@ -95,7 +97,7 @@
 					<div class="flex px-6 mb-2">
 						<div class="vx-col sm:w-1/4 w-full text_end"></div>
 						<div class="vx-col sm:w-1/2 w-full">
-							<vs-button type="relief" @click="">Price Sheet</vs-button>
+							<vs-button type="relief" @click="style_group()">Price Sheet</vs-button>
 						</div>
 					</div>
 				</div>
@@ -312,42 +314,22 @@
 			'v-select': vSelect
 		},
 		data:()=>({
-			textarea: '',
+			textarea: ''
 		}),
 		computed: {
-			images() {
-				this.$store.dispatch('job/fetchImage')
-					.then((response) => { console.log(response.data) })
-					// .catch(error => {
-					// 	this.$vs.notify({
-					// 		title: 'Error',
-					// 		text: error.message,
-					// 		iconPack: 'feather',
-					// 		icon: 'icon-alert-circle',
-					// 		color: 'danger'
-					// 	})
-					// })
+			images () {
+				return this.$store.state.job.images;
 			}
 		},
 		methods: {
-			
 			style_group () {
 				this.$store.dispatch('job/fetchStyle')
 					.then(() => { return response.data })
-					// .catch(error => {
-					// 	this.$vs.notify({
-					// 		title: 'Error',
-					// 		text: error.message,
-					// 		iconPack: 'feather',
-					// 		icon: 'icon-alert-circle',
-					// 		color: 'danger'
-					// })
-				// })
 			},
 			
 		},
 		created () {
-			// this.$store.registerModule('job', moduleJob)
+			this.$store.dispatch('job/fetchImage');
 		},
 		beforeDestroy () {
 			// this.$store.unregisterModule('job')

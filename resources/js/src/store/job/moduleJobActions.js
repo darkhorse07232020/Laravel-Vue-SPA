@@ -15,6 +15,7 @@ export default {
     return new Promise((resolve, reject) => {
       axios.get('/api/job/image')
         .then((response) => {
+          commit('UPDATE_IMAGES', response.data)
           resolve(response)
         })
         .catch((error) => { reject(error) })

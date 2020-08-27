@@ -11,6 +11,8 @@
 import Vue from 'vue'
 
 export default {
-  
+  UPDATE_IMAGES (state, images) {
+    state.images = images
+  }
 }
 
