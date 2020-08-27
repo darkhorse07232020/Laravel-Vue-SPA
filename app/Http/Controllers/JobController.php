@@ -23,7 +23,8 @@ class JobController extends Controller
 
     public function getStyle(Request $request) {
         $cond=$request->condition;
-        $data = Style_group::where('BrandID', $cond)->select('Name')->get()/first();
+        $data = Style_group::where('BrandID', $cond)->select('Name')->get();
+        dd($data);
         return response()->json($data, Response::HTTP_OK);
     }
 

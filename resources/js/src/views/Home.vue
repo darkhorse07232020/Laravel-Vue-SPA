@@ -11,7 +11,7 @@
 						<div class="px-3 ml-auto mr-auto" v-for="(image, index) in images" :key="index">
 							<!-- <vs-input class="inputx" :placeholder="image.ID" /> -->
 							<vs-radio v-model="radio_brand" :vs-value="image.ID" @change="style_group(image.ID)">
-								<vs-image :src="image.logo_image_small" />
+								<vs-image :src="`images/${image.logo_image_small}`" />
 							</vs-radio>
 						</div>
 						<!-- {{radio_brand}} -->
