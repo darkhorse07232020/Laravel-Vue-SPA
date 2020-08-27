@@ -21,4 +21,19 @@ export default {
         .catch((error) => { reject(error) })
     })
   },
+  fetchStyle ({ commit }, payload) {
+    const {condition} = payload
+    return new Promise((resolve, reject) => {
+      axios.get('/api/job/style', {
+        params: {
+          condition: condition
+        }
+      })
+        .then((response) => {
+          commit('UPDATE_STYLES', response.data)
+          resolve(response)
+        })
+        .catch((error) => { reject(error) })
+    })
+  },
 }

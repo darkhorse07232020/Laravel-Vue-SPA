@@ -20,6 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/job/image', 'JobController@index');
-// Route::get('/job/style', 'JobController@getStyle');
+Route::get('/job/style', 'JobController@getStyle');
 // Route::get('/job/door', 'JobController@getDoor');
 

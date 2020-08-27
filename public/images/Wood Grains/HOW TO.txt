@@ -1,0 +1,22 @@
+How to convert to gray scale and washed out for image
+
+IrfanView = Software
+
+With Color Image:
+(Toolbar) --> Image --> Color Corrections
+Contrast = 50
+Click "OK"
+(Toolbar) --> Image --> Convert to Gracyscale
+(Toolbar) --> Image --> Color Corrections
+Brightness Range =  100 to 150
+Contrast Range= 0 to 50
+To Test Click "Apply to original"
+Click "OK"
+Save 
+
+
+Current Images:
+Bamboo = 50 --> 100 --> 50
+Plain Sliced = 50 --> 150 --> 50
+Quarter Sawn = 50 --> 100 --> 0
+Rift Cut = 50 --> 100 --> 50

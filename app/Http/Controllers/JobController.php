@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 //Import Models
 use App\Model\Style\Style_brand;
+use App\Model\Style\Style_group;
 
 //Import Libraries
 use Illuminate\Http\Request;
@@ -17,17 +18,17 @@ class JobController extends Controller
     {
         $data = Style_brand::all();
         return response()->json($data, Response::HTTP_OK);
-        // return new JsonResponse(
-        //     $data, 200
-        // );
         
     }
 
-    public function getStyle() {
-
+    public function getStyle(Request $request) {
+        $cond=$request->condition;
+        $data = Style_group::where('BrandID', $cond)->select('Name')->get()/first();
+        return response()->json($data, Response::HTTP_OK);
     }
 
     public function getDoor() {
-
+        $data = Style_brand::all();
+        return response()->json($data, Response::HTTP_OK);
     }
 }

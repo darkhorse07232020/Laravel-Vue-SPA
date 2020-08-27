@@ -7,23 +7,21 @@
 					<span class="headText"><pre>  Doors & Drawers</pre></span>
 				</div>
 				<div style="font-size:1em">
-					<div class="flex px-6 mb-6 item_center">
-						<div class="vx-col w-full">
-							<ul>
-								<li v-for="(image, index) in images" :key="image.ID">
-									<vs-radio >
-										<vs-image :key="index" :src="image.logo_image_small" />
-									</vs-radio>
-								</li>
-							</ul>
+					<div class="flex flex-wrap px-6 mb-6">
+						<div class="px-3 ml-auto mr-auto" v-for="(image, index) in images" :key="index">
+							<!-- <vs-input class="inputx" :placeholder="image.ID" /> -->
+							<vs-radio v-model="radio_brand" :vs-value="image.ID" @change="style_group(image.ID)">
+								<vs-image :src="image.logo_image_small" />
+							</vs-radio>
 						</div>
+						<!-- {{radio_brand}} -->
 					</div>
 					<div class="flex px-6 mb-6 item_center">
 						<div class="vx-col sm:w-1/4 w-full text_end">
 							<span><b>Style Group <span style="color:red">*</span></b></span>
 						</div>
 						<div class="vx-col sm:w-1/2 w-full">
-							<v-select :options="[style.ID]" v-for="(style, index) in images" :key="index" @change="" />
+							<v-select :options="styles" @change="" />
 						</div>
 					</div>
 
@@ -313,23 +311,48 @@
 		components: {
 			'v-select': vSelect
 		},
-		data:()=>({
-			textarea: ''
-		}),
+		data(){
+			return {
+				textarea: '',
+				radio_brand: '',
+			}
+		},
 		computed: {
 			images () {
 				return this.$store.state.job.images;
+			},
+			styles () {
+				console.log(this.$store.state.job.styles);
+				return this.$store.state.job.styles;
 			}
 		},
 		methods: {
-			style_group () {
-				this.$store.dispatch('job/fetchStyle')
-					.then(() => { return response.data })
+			style_group (brand_id) {
+				this.$vs.loading();
+				const payload = {
+					condition: brand_id
+				};
+				this.$store.dispatch('job/fetchStyle', payload)
+					.then((response) => {
+						// console.log(response.data);
+						this.$vs.loading.close()
+					})
+					.catch( error => {
+						console.log(error);
+						this.$vs.loading.close()
+					})
 			},
 			
 		},
 		created () {
-			this.$store.dispatch('job/fetchImage');
+			this.$vs.loading();
+			this.$store.dispatch('job/fetchImage')
+				.then(()=>{
+					this.$vs.loading.close();
+				})
+				.catch(error => {
+					this.$vs.loading.close();
+				})
 		},
 		beforeDestroy () {
 			// this.$store.unregisterModule('job')
