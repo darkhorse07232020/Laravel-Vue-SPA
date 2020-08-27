@@ -23,9 +23,15 @@ class JobController extends Controller
 
     public function getStyle(Request $request) {
         $cond=$request->condition;
-        $data = Style_group::where('BrandID', $cond)->select('Name')->get();
-        dd($data);
-        return response()->json($data, Response::HTTP_OK);
+        $data = Style_group::where('BrandID', $cond)
+            ->orderBy('Name')
+            ->get();
+            // ->pluck("Name", "ID");
+        $dataName = $data->pluck("Name");
+        $dataID = $data->pluck("ID");
+        $res = ['ID' => $dataID, 'Name' => $dataName];
+        // dd($data);
+        return response()->json($res, Response::HTTP_OK);
     }
 
     public function getDoor() {

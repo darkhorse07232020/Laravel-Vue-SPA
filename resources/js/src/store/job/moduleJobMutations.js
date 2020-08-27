@@ -15,7 +15,7 @@ export default {
     state.images = images
   },
   UPDATE_STYLES (state, styles) {
-    state.styles=styles;
+    state.styles = styles;
   }
 }
 

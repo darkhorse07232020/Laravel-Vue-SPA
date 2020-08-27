@@ -30,6 +30,12 @@ export default {
         }
       })
         .then((response) => {
+          // res=[];
+          // console.log(res);
+
+          // response.data.forEach(dd => {
+          //   res.push({'ID': dd.ID, 'Name': dd.Name});
+          // });
           commit('UPDATE_STYLES', response.data)
           resolve(response)
         })

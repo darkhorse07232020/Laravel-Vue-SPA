@@ -11,7 +11,7 @@
 						<div class="px-3 ml-auto mr-auto" v-for="(image, index) in images" :key="index">
 							<!-- <vs-input class="inputx" :placeholder="image.ID" /> -->
 							<vs-radio v-model="radio_brand" :vs-value="image.ID" @change="style_group(image.ID)">
-								<vs-image :src="`images/${image.logo_image_small}`" />
+								<img :src="`/images/logos/${image.logo_image_small}`" :width="image.image_width" :height="image.image_height" />
 							</vs-radio>
 						</div>
 						<!-- {{radio_brand}} -->
@@ -21,7 +21,7 @@
 							<span><b>Style Group <span style="color:red">*</span></b></span>
 						</div>
 						<div class="vx-col sm:w-1/2 w-full">
-							<v-select :options="styles" @change="" />
+							<v-select :options="styles.Name" @input="showlist" />
 						</div>
 					</div>
 
@@ -322,7 +322,6 @@
 				return this.$store.state.job.images;
 			},
 			styles () {
-				console.log(this.$store.state.job.styles);
 				return this.$store.state.job.styles;
 			}
 		},
@@ -335,13 +334,18 @@
 				this.$store.dispatch('job/fetchStyle', payload)
 					.then((response) => {
 						// console.log(response.data);
-						this.$vs.loading.close()
+						this.$vs.loading.close();
 					})
 					.catch( error => {
-						console.log(error);
+						// console.log(error);
 						this.$vs.loading.close()
 					})
 			},
+			showlist(value)
+			{
+				console.log(value);
+				// doors (brand_id)
+			}
 			
 		},
 		created () {
