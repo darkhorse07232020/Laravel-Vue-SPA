@@ -26,5 +26,8 @@ export default {
   UPDATE_COLOURS (state, colors) {
     state.colors = colors;
   },
+  UPDATE_FINISHS (state, finish) {
+    state.finish = finish;
+  },
 }
 

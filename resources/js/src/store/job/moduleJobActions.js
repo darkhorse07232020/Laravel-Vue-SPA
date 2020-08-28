@@ -96,4 +96,22 @@ export default {
         .catch((error) => { reject(error) })
     })
   },
+
+  fetchFinish ({ commit }, payload) {
+
+    const {FinishID} = payload;
+    
+    return new Promise((resolve, reject) => {
+      axios.get('/api/job/finish', {
+        params: {
+          FinishID: FinishID,
+        }
+      })
+        .then((response) => {
+          commit('UPDATE_FINISHS', response.data)
+          resolve(response)
+        })
+        .catch((error) => { reject(error) })
+    })
+  },
 }

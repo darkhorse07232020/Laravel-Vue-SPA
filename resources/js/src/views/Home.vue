@@ -81,7 +81,7 @@
 							<span><b>Color/Pattern <span style="color:red">*</span></b></span>
 						</div>
 						<div class="vx-col sm:w-1/2 w-full">
-							<v-select label="Name" v-model="setColor" :options="colors" @input="" />
+							<v-select label="Name" v-model="setColor" :options="colors" @input="getFinish" />
 						</div>
 					</div>
 
@@ -91,7 +91,7 @@
 							<span><b>Finish <span style="color:red">*</span></b></span>
 						</div>
 						<div class="vx-col sm:w-1/2 w-full">
-							<v-select :options="['foo','bar']" />
+							<v-select label="Name" v-model="setFinish" :options="finish" @input="" />
 						</div>
 					</div>
 
@@ -238,7 +238,7 @@
 							<span><b>Hinges <span style="color:red">*</span></b></span>
 						</div>
 						<div class="vx-col sm:w-1/2 w-full">
-							<v-select :options="['foo','bar']" />
+							<v-select :options="[]" />
 						</div>
 					</div>
 
@@ -250,7 +250,7 @@
 							<span><b>Fin End Material <span style="color:red">*</span></b></span>
 						</div>
 						<div class="vx-col sm:w-1/2 w-full">
-							<v-select :options="['foo','bar']" />
+							<v-select <v-select label="Name" v-model="setFMaterial" :options="materials.Material" @input="" />
 						</div>
 					</div>
 
@@ -260,7 +260,7 @@
 							<span><b>Fin End Color <span style="color:red">*</span></b></span>
 						</div>
 						<div class="vx-col sm:w-1/2 w-full">
-							<v-select :options="['foo','bar']" />
+							<v-select  label="Name" v-model="setFColor" :options="colors" />
 						</div>
 					</div>
 
@@ -270,7 +270,7 @@
 							<span><b>Fin End Finish <span style="color:red">*</span></b></span>
 						</div>
 						<div class="vx-col sm:w-1/2 w-full">
-							<v-select :options="['foo','bar']" />
+							<v-select label="Name" v-model="setFFinish" :options="finish" />
 						</div>
 					</div>
 
@@ -350,6 +350,7 @@
 				setSDrawer: 'Select Small Drawer...',
 				setMaterial: 'Select Material...',
 				setColor: 'Select Color...',
+				setFinish: 'Select Color...',
 
 				setCMaterial: 'Select Cabinet Box Material...',
 				setDBox: 'Select Drawer Box...',
@@ -372,6 +373,9 @@
 			colors () {
 				return this.$store.state.job.colors;
 			},
+			finish () {
+				return this.$store.state.job.finish;
+			},
 		},
 		methods: {
 			get_Styles_CMaterial (brand_id) {
@@ -382,6 +386,7 @@
 				this.setLDrawer = 'Select Large Drawer...';
 				this.setMaterial = 'Select Material...';
 				this.setColor = 'Select Color...';
+				this.setFinish = 'Select Finish...';
 
 				this.setCMaterial = 'Select Cabinet Box Material...';
 				this.setDBox = 'Select Drawer Box...';
@@ -408,6 +413,7 @@
 				this.setLDrawer = 'Select Large Drawer...';
 				this.setMaterial = 'Select Material...';
 				this.setColor = 'Select Color...';
+				this.setFinish = 'Select Finish...';
 
 				this.$vs.loading();
 				
@@ -428,7 +434,10 @@
 			},
 			getMaterial(value) {
 				this.setMaterial = 'Select Material...';
+				this.setSDrawer = 'Select Small Drawer...';
+				this.setLDrawer = 'Select Large Drawer...';
 				this.setColor = 'Select Color...';
+				this.setFinish = 'Select Finish...';
 
 				this.$vs.loading();
 				
@@ -449,6 +458,7 @@
 			},
 			getColor(value) {
 				this.setColor = 'Select Color...';
+				this.setFinish = 'Select Finish...';
 
 				this.$vs.loading();
 				
@@ -458,6 +468,24 @@
 				};
 				
 				this.$store.dispatch('job/fetchColor', payload)
+					.then((response) => {
+						this.$vs.loading.close();
+					})
+					.catch( error => {
+						this.$vs.loading.close()
+					})
+			},
+			getFinish(value) {
+				this.setFinish = 'Select Finish...';
+
+				this.$vs.loading();
+				
+				// get Material select List
+				const payload = {
+					FinishID: value.FinishID,
+				};
+				
+				this.$store.dispatch('job/fetchFinish', payload)
 					.then((response) => {
 						this.$vs.loading.close();
 					})

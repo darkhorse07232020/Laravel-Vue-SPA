@@ -8,6 +8,7 @@ use App\Model\Style\Style_group;
 use App\Model\Style\Style;
 use App\Model\Style\Style_Material;
 use App\Model\Style\Style_Color;
+use App\Model\Style\Style_Finish;
 
 use App\Model\Cabinet\Cabinet_Material;
 use App\Model\Cabinet\Cabinet_Drwbox;
@@ -116,6 +117,22 @@ class JobController extends Controller
                 ->first()->toArray();
             array_push($data, $tmp);
         }
+        return response()->json($data, Response::HTTP_OK);
+    }
+
+    public function getFinish(Request $request) {
+        $finish_str = $request -> FinishID;
+        
+        $finish = explode(",", $finish_str);
+        
+        $data = array();
+        foreach ($finish as $cond) {
+            $tmp = Style_Finish::where('ID', $cond)
+                ->select("Name", "ID")
+                ->first()->toArray();
+            array_push($data, $tmp);
+        }
+        
         return response()->json($data, Response::HTTP_OK);
     }
 }

@@ -14,4 +14,5 @@ export default {
   doors: [],
   materials: [],
   colors: [],
+  finish: [],
 }
