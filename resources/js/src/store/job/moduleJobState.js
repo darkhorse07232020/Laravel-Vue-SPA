@@ -10,5 +10,8 @@
 
 export default {
   images: [],
-  styles: [],
+  styles_cmaterial: [],
+  doors: [],
+  materials: [],
+  colors: [],
 }

@@ -12,6 +12,7 @@ import axios from '@/axios.js'
 export default {
   // Get contacts from server. Also change in store
   fetchImage ({ commit }) {
+
     return new Promise((resolve, reject) => {
       axios.get('/api/job/image')
         .then((response) => {
@@ -21,8 +22,10 @@ export default {
         .catch((error) => { reject(error) })
     })
   },
+
   fetchStyle ({ commit }, payload) {
-    const {condition} = payload
+
+    const {condition} = payload;
     return new Promise((resolve, reject) => {
       axios.get('/api/job/style', {
         params: {
@@ -30,13 +33,64 @@ export default {
         }
       })
         .then((response) => {
-          // res=[];
-          // console.log(res);
+          commit('UPDATE_STYLESCMATERIAL', response.data)
+          resolve(response)
+        })
+        .catch((error) => { reject(error) })
+    })
+  },
 
-          // response.data.forEach(dd => {
-          //   res.push({'ID': dd.ID, 'Name': dd.Name});
-          // });
-          commit('UPDATE_STYLES', response.data)
+  fetchDoor ({ commit }, payload) {
+
+    const {BrandID_con, GroupID_con} = payload;
+    
+    return new Promise((resolve, reject) => {
+      axios.get('/api/job/door', {
+        params: {
+          BrandID: BrandID_con,
+          GroupID: GroupID_con,
+        }
+      })
+        .then((response) => {
+          commit('UPDATE_DOORS', response.data)
+          resolve(response)
+        })
+        .catch((error) => { reject(error) })
+    })
+  },
+  
+  fetchMaterial ({ commit }, payload) {
+
+    const {MaterialID, DrawerStyleID, LgDrawerStyleID} = payload;
+    
+    return new Promise((resolve, reject) => {
+      axios.get('/api/job/material', {
+        params: {
+          MaterialID: MaterialID,
+          DrawerStyleID: DrawerStyleID,
+          LgDrawerStyleID: LgDrawerStyleID
+        }
+      })
+        .then((response) => {
+          commit('UPDATE_MATERIALS', response.data)
+          resolve(response)
+        })
+        .catch((error) => { reject(error) })
+    })
+  },
+
+  fetchColor ({ commit }, payload) {
+
+    const {ColorID} = payload;
+    
+    return new Promise((resolve, reject) => {
+      axios.get('/api/job/color', {
+        params: {
+          ColorID: ColorID,
+        }
+      })
+        .then((response) => {
+          commit('UPDATE_COLOURS', response.data)
           resolve(response)
         })
         .catch((error) => { reject(error) })
