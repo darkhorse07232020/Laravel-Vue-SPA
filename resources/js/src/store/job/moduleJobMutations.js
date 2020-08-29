@@ -29,5 +29,8 @@ export default {
   UPDATE_FINISHS (state, finish) {
     state.finish = finish;
   },
+  UPDATE_EDGES (state, edges) {
+    state.edges = edges;
+  },
 }
 

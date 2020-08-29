@@ -25,3 +25,4 @@ Route::get('/job/door', 'JobController@getDoor');
 Route::get('/job/material', 'JobController@getMaterial');
 Route::get('/job/color', 'JobController@getColor');
 Route::get('/job/finish', 'JobController@getFinish');
+Route::get('/job/edge', 'JobController@getEdge');

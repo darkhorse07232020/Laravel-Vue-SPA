@@ -91,7 +91,7 @@
 							<span><b>Finish <span style="color:red">*</span></b></span>
 						</div>
 						<div class="vx-col sm:w-1/2 w-full">
-							<v-select label="Name" v-model="setFinish" :options="finish" @input="" />
+							<v-select label="Name" v-model="setFinish" :options="finish" @input="getEdge" />
 						</div>
 					</div>
 
@@ -260,7 +260,7 @@
 							<span><b>Fin End Color <span style="color:red">*</span></b></span>
 						</div>
 						<div class="vx-col sm:w-1/2 w-full">
-							<v-select  label="Name" v-model="setFColor" :options="colors" />
+							<v-select  label="Name" v-model="setColor" :options="colors" />
 						</div>
 					</div>
 
@@ -270,7 +270,7 @@
 							<span><b>Fin End Finish <span style="color:red">*</span></b></span>
 						</div>
 						<div class="vx-col sm:w-1/2 w-full">
-							<v-select label="Name" v-model="setFFinish" :options="finish" />
+							<v-select label="Name" v-model="setFinish" :options="finish" />
 						</div>
 					</div>
 
@@ -280,7 +280,7 @@
 							<span><b>Edge Banding <span style="color:red">*</span></b></span>
 						</div>
 						<div class="vx-col sm:w-1/2 w-full">
-							<v-select :options="['foo','bar']" />
+							<v-select label="Name" v-model="setEdge" :options="edges" />
 						</div>
 					</div>
 
@@ -354,7 +354,8 @@
 
 				setCMaterial: 'Select Cabinet Box Material...',
 				setDBox: 'Select Drawer Box...',
-
+				setFMaterial: 'Select Drawer Box...',
+				setEdge: 'Select Edge Branding...',
 			}
 		},
 		computed: {
@@ -376,6 +377,9 @@
 			finish () {
 				return this.$store.state.job.finish;
 			},
+			edges () {
+				return this.$store.state.job.edges;
+			},
 		},
 		methods: {
 			get_Styles_CMaterial (brand_id) {
@@ -390,7 +394,7 @@
 
 				this.setCMaterial = 'Select Cabinet Box Material...';
 				this.setDBox = 'Select Drawer Box...';
-
+				this.setEdge =  'Select Edge Branding...',
 
 				this.$vs.loading();
 				
@@ -459,7 +463,7 @@
 			getColor(value) {
 				this.setColor = 'Select Color...';
 				this.setFinish = 'Select Finish...';
-
+				
 				this.$vs.loading();
 				
 				// get Material select List
@@ -478,6 +482,9 @@
 			getFinish(value) {
 				this.setFinish = 'Select Finish...';
 
+				this.setEdge =  'Select Edge Branding...',
+
+
 				this.$vs.loading();
 				
 				// get Material select List
@@ -486,6 +493,25 @@
 				};
 				
 				this.$store.dispatch('job/fetchFinish', payload)
+					.then((response) => {
+						this.$vs.loading.close();
+					})
+					.catch( error => {
+						this.$vs.loading.close()
+					})
+			},
+			getEdge(value) {
+				this.setEdge =  'Select Edge Branding...';
+				console.log(this.setMaterial.ID, this.setColor.ID)
+				this.$vs.loading();
+				
+				// get Material select List
+				const payload = {
+					MaterialID: this.setMaterial.ID,
+					ColorID: this.setColor.ID,
+				};
+				
+				this.$store.dispatch('job/fetchEdge', payload)
 					.then((response) => {
 						this.$vs.loading.close();
 					})

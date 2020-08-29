@@ -114,4 +114,23 @@ export default {
         .catch((error) => { reject(error) })
     })
   },
+
+  fetchEdge ({ commit }, payload) {
+
+    const {FinishID} = payload;
+    
+    return new Promise((resolve, reject) => {
+      axios.get('/api/job/Edge', {
+        params: {
+          MaterialID: MaterialID,
+          ColorID: ColorID,
+        }
+      })
+        .then((response) => {
+          commit('UPDATE_EDGES', response.data)
+          resolve(response)
+        })
+        .catch((error) => { reject(error) })
+    })
+  },
 }

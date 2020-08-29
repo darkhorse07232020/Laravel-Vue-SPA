@@ -15,4 +15,5 @@ export default {
   materials: [],
   colors: [],
   finish: [],
+  edges: [],
 }

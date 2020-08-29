@@ -55,14 +55,13 @@ class JobController extends Controller
     public function getDoor(Request $request) {
         $brand_id = $request -> BrandID;
         $group_id = $request -> GroupID;
-        $style_type = $request -> StyleType;
         $data = Style::where('BrandID', $brand_id)
             ->where('GroupID', $group_id)
             ->where('StyleType', 'Door')
             ->orderBy('Name')
             ->select("Name", "ID", "BrandID", "MaterialID", "DrawerStyleID", "LgDrawerStyleID")
             ->get()->toArray();
-        
+
         return response()->json($data, Response::HTTP_OK);
     }
 
@@ -132,6 +131,14 @@ class JobController extends Controller
                 ->first()->toArray();
             array_push($data, $tmp);
         }
+        
+        return response()->json($data, Response::HTTP_OK);
+    }
+
+    public function getEdge(Request $request) {
+        $material_id = $request -> MaterialID;
+        $color_id = $request -> ColorID;
+        
         
         return response()->json($data, Response::HTTP_OK);
     }
