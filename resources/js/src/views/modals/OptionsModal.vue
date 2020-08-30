@@ -161,6 +161,6 @@ export default {
 
 <style lang="stylus">
 .con-vs-dialog .vs-dialog {
-    max-width: 100%;
+    max-width: 90%;
 }
 </style>

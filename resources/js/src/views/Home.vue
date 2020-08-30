@@ -71,7 +71,12 @@
 							<span><b>Material <span style="color:red">*</span></b></span>
 						</div>
 						<div class="vx-col sm:w-1/2 w-full">
-							<v-select label="Name" v-model="setMaterial" :options="materials.Material" @input="getColor" />
+							<v-select label="Name" v-model="setMaterial" :options="materials.Material" @input="getColor" >
+								<template slot="option" slot-scope="option">
+									<img :src="`/images/finish/${option.Name}.jpg`" width='40' />
+									{{ option.Name }}
+								</template>
+							</v-select>
 						</div>
 					</div>
 
@@ -81,7 +86,12 @@
 							<span><b>Color/Pattern <span style="color:red">*</span></b></span>
 						</div>
 						<div class="vx-col sm:w-1/2 w-full">
-							<v-select label="Name" v-model="setColor" :options="colors" @input="getFinish" />
+							<v-select label="Name" v-model="setColor" :options="colors" @input="getFinish" >
+								<template slot="option" slot-scope="option">
+									<img :src="`/images/finish/${materials.Material.Name} ${option.Name}.jpg`" width='40' />
+									{{ option.Name }}
+								</template>
+							</v-select>
 						</div>
 					</div>
 
@@ -218,7 +228,12 @@
 							<span><b>Cabinet Box Material <span style="color:red">*</span></b></span>
 						</div>
 						<div class="vx-col sm:w-1/2 w-full">
-							<v-select label="Name" v-model="setCMaterial" :options="styles_cmaterial.cmaterial" @input="" />
+							<v-select label="Name" v-model="setCMaterial" :options="styles_cmaterial.cmaterial" @input="" >
+								<template slot="option" slot-scope="option">
+									<img :src="`/images/finish/${option.Name}.jpg`" width='40' />
+									{{ option.Name }}
+								</template>
+							</v-select>
 						</div>
 					</div>
 					
@@ -250,7 +265,12 @@
 							<span><b>Fin End Material <span style="color:red">*</span></b></span>
 						</div>
 						<div class="vx-col sm:w-1/2 w-full">
-							<v-select <v-select label="Name" v-model="setFMaterial" :options="materials.Material" @input="" />
+							<v-select <v-select label="Name" v-model="setMaterial" :options="materials.Material" @input="" >
+								<template slot="option" slot-scope="option">
+									<img :src="`/images/finish/${option.Name}.jpg`" width='40' />
+									{{ option.Name }}
+								</template>
+							</v-select>
 						</div>
 					</div>
 
@@ -359,7 +379,6 @@
 
 				setCMaterial: 'Select Cabinet Box Material...',
 				setDBox: 'Select Drawer Box...',
-				setFMaterial: 'Select Drawer Box...',
 				setEdge: 'Select Edge Branding...',
 				setHinges: 'Select Hinges...',
 
