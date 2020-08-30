@@ -135,7 +135,7 @@ export default {
     })
   },
 
-  fetchProfile ({ commit }, payload) {
+  fetchProfiles ({ commit }, payload) {
 
     const {Inside, Outside, CenterPanel, StileRail, Hardware} = payload;
     
@@ -150,11 +150,16 @@ export default {
         }
       })
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           commit('UPDATE_PROFILES', response.data)
           resolve(response)
         })
         .catch((error) => { reject(error) })
     })
+  },
+
+  setDrawerdatas ({ commit }, payload) {
+    console.log(payload);
+    commit('UPDATE_DRAWERDATAS', payload);
   },
 }

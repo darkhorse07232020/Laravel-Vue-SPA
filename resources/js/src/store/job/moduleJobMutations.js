@@ -35,5 +35,8 @@ export default {
   UPDATE_PROFILES (state, profiles) {
     state.profiles = profiles;
   },
+  UPDATE_DRAWERDATAS (state, drawerData) {
+    state.drawerData = drawerData;
+  },
 }
 

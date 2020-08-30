@@ -17,4 +17,5 @@ export default {
   finish: [],
   edges: [],
   profiles: [],
+  drawerData: [],
 }

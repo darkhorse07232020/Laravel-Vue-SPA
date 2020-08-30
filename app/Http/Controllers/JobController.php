@@ -157,17 +157,68 @@ class JobController extends Controller
     }
 
     public function getProfile(Request $request) {
-        $finish_str = $request -> FinishID;
-        
-        $finish = explode(",", $finish_str);
-        
-        $data = array();
-        foreach ($finish as $cond) {
-            $tmp = Style_Finish::where('ID', $cond)
-                ->select("Name", "ID")
-                ->first()->toArray();
-            array_push($data, $tmp);
+        $inside_str = $request -> Inside;
+        $outside_str = $request -> Outside;
+        $centerpanel_str = $request -> CenterPanel;
+        $stilerail_str = $request -> StileRail;
+        $hardware_str = $request -> Hardware;
+
+        $inside = explode(",", $inside_str);
+        $data1 = array();
+        foreach ($inside as $cond) {
+            $tmp = Style_Insideprofile::where('ID', $cond)
+                ->select("Name", "Code", "ID")
+                ->first();
+            if($tmp) {
+                array_push($data1, $tmp->toArray());
+            }
         }
+        
+        $outside = explode(",", $outside_str);
+        $data2 = array();
+        foreach ($outside as $cond) {
+            $tmp = Style_Outsideprofile::where('ID', $cond)
+                ->select("Name", "Code", "ID")
+                ->first();
+            if($tmp) {
+                array_push($data2, $tmp->toArray());
+            }
+        }
+
+        $centerpanel = explode(",", $centerpanel_str);
+        $data3 = array();
+        foreach ($centerpanel as $cond) {
+            $tmp = Style_Centerpanel::where('ID', $cond)
+                ->select("Name", "Code", "ID")
+                ->first();
+            if($tmp) {
+                array_push($data3, $tmp->toArray());
+            }
+        }
+
+        $stilerail = explode(",", $stilerail_str);
+        $data4 = array();
+        foreach ($stilerail as $cond) {
+            $tmp = Style_Stilerail::where('ID', $cond)
+                ->select("Name", "Code", "ID")
+                ->first();
+            if($tmp) {
+                array_push($data4, $tmp->toArray());
+            }
+        }
+
+        $hardware = explode(",", $hardware_str);
+        $data5 = array();
+        foreach ($hardware as $cond) {
+            $tmp = Style_Hardware::where('ID', $cond)
+                ->select("Name", "Code", "ID")
+                ->first();
+            if($tmp) {
+                array_push($data5, $tmp->toArray());
+            }
+        }
+
+        $data = ['insides' => $data1, 'outsides' => $data2, 'centerpanels' => $data3, 'stilerails' => $data4, 'hardwares' => $data5];
         
         return response()->json($data, Response::HTTP_OK);
     }

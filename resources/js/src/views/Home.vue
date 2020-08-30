@@ -133,10 +133,10 @@
 
 					<div class="flex px-6 mb-6 item_center">
 						<div class="vx-col sm:w-1/2 w-full px-4">
-							<img :src="`/images/doors/${setDoor.Name}/Door ${setDoor.Name} Thumbnail VBE.png`" />
+							<img :src="`/images/doors/${setDoor.Name}/Door ${setDoor.Name} Thumbnail ${drawerData.door_code}.png`" alt="No-Image" width = '70' hegit = '70' />
 						</div>
 						<div class="vx-col sm:w-1/2 w-full px-4">
-							<vs-image :key="index" :src="`${index}`" v-for="(image, index) in 9" />
+							<img :src="`/images/inside/${drawerData.inside_code}.png`" alt="No-Image" width = '70' hegit = '70' />
 						</div>
 					</div>
 					<div class="flex px-6 mb-6 item_center">
@@ -150,10 +150,10 @@
 
 					<div class="flex px-6 mb-6 item_center">
 						<div class="vx-col sm:w-1/2 w-full px-4">
-							<vs-image :key="index" :src="`${index}`" v-for="(image, index) in 9" />
+							<img :src="`/images/drawers/${setSDrawer.Name}/Drw ${setSDrawer.Name} Thumbnail ${drawerData.door_code}.png`" alt="No-Image" width = '70' hegit = '70' />
 						</div>
 						<div class="vx-col sm:w-1/2 w-full px-4">
-							<vs-image :key="index" :src="`${index}`" v-for="(image, index) in 9" />
+							<img :src="`/images/centerpanel/${drawerData.centerpanel_code}.png`" alt="No-Image" width = '70' hegit = '70' />
 						</div>
 					</div>
 					<div class="flex px-6 mb-6 item_center">
@@ -167,10 +167,10 @@
 
 					<div class="flex px-6 mb-6 item_center">
 						<div class="vx-col sm:w-1/2 w-full px-4">
-							<vs-image :key="index" :src="`${index}`" v-for="(image, index) in 9" />
+							<img :src="`/images/largedrawers/${setLDrawer.Name}/LgDrw ${setLDrawer.Name} Thumbnail ${drawerData.door_code}.png`" alt="No-Image" width = '70' hegit = '70' />
 						</div>
 						<div class="vx-col sm:w-1/2 w-full px-4">
-							<vs-image :key="index" :src="`${index}`" v-for="(image, index) in 9" />
+							<img :src="`/images/outside/${drawerData.outside_code}.png`" alt="No-Image" width = '70' hegit = '70' />
 						</div>
 					</div>
 					<div class="flex px-6 mb-6 item_center">
@@ -184,10 +184,10 @@
 
 					<div class="flex px-6 mb-6 item_center">
 						<div class="vx-col sm:w-1/2 w-full px-4">
-							<vs-image :key="index" :src="`${index}`" v-for="(image, index) in 9" />
+							<img :src="`/images/hardware/${drawerData.hardware_code}.png`" alt="No-Image" width = '70' hegit = '70' />
 						</div>
 						<div class="vx-col sm:w-1/2 w-full px-4">
-							<vs-image :key="index" :src="`${index}`" v-for="(image, index) in 9" />
+							<img :src="`/images/stilerail/${drawerData.stilerail_code}.png`" alt="No-Image" width = '70' hegit = '70' />
 						</div>
 					</div>
 					<div class="flex px-6 mb-6 item_center">
@@ -338,7 +338,7 @@
 
 <script>
 	import vSelect from 'vue-select'
-	import OptionsModal from './OptionsModal.vue'
+	import OptionsModal from './modals/OptionsModal.vue'
 
 	export default{
 		components: {
@@ -389,6 +389,9 @@
 			edges () {
 				return this.$store.state.job.edges;
 			},
+			drawerData () {
+				return this.$store.state.job.drawerData;
+			},
 		},
 		methods: {
 			showOptionDialog(){
@@ -403,6 +406,9 @@
 			},
 			hidePrompt () {
 				this.displayPrompt = false;
+			},
+			showDrawings(code_val) {
+				console.log(code_val);
 			},
 			get_Styles_CMaterial (brand_id) {
 				//clear select
