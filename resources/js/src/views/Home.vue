@@ -40,7 +40,7 @@
 							<v-select label="Name" v-model="setDoor" :options="doors" @input="getMaterial" />
 						</div>
 						<div class="vx-col sm:w-1/4 w-full px-2">
-							<vs-button type="flat" size="small" style="font-size: 0.9em; padding:0.5em 0.7em;">Options</vs-button>
+							<vs-button type="flat" size="small" style="font-size: 0.9em; padding:0.5em 0.7em;" @click="showOptionDialog">Options</vs-button>
 							<vs-button type="flat" size="small" style="font-size: 0.9em; padding:0.5em 0.7em;">Spec</vs-button>
 						</div>
 					</div>
@@ -133,7 +133,7 @@
 
 					<div class="flex px-6 mb-6 item_center">
 						<div class="vx-col sm:w-1/2 w-full px-4">
-							<vs-image :key="index" :src="`${index}`" v-for="(image, index) in 9" />
+							<img :src="`/images/doors/${setDoor.Name}/Door ${setDoor.Name} Thumbnail VBE.png`" />
 						</div>
 						<div class="vx-col sm:w-1/2 w-full px-4">
 							<vs-image :key="index" :src="`${index}`" v-for="(image, index) in 9" />
@@ -238,7 +238,7 @@
 							<span><b>Hinges <span style="color:red">*</span></b></span>
 						</div>
 						<div class="vx-col sm:w-1/2 w-full">
-							<v-select :options="[]" />
+							<v-select label="Name" v-model="setHinges" :options="edges.hinges" />
 						</div>
 					</div>
 
@@ -280,7 +280,7 @@
 							<span><b>Edge Banding <span style="color:red">*</span></b></span>
 						</div>
 						<div class="vx-col sm:w-1/2 w-full">
-							<v-select label="Name" v-model="setEdge" :options="edges" />
+							<v-select label="Name" v-model="setEdge" :options="edges.edges" />
 						</div>
 					</div>
 
@@ -330,15 +330,20 @@
 			</vs-card>
 		</div>
 	</div>
+	
+	<options-modal :displayPrompt="displayPrompt" :optionsVal = "optionsVal" @hideDisplayPrompt="hidePrompt" v-if="displayPrompt" ></options-modal>
 </div>
+
 </template>
 
 <script>
 	import vSelect from 'vue-select'
+	import OptionsModal from './OptionsModal.vue'
 
 	export default{
 		components: {
-			'v-select': vSelect
+			'v-select': vSelect,
+			OptionsModal,
 		},
 		data(){
 			return {
@@ -356,6 +361,10 @@
 				setDBox: 'Select Drawer Box...',
 				setFMaterial: 'Select Drawer Box...',
 				setEdge: 'Select Edge Branding...',
+				setHinges: 'Select Hinges...',
+
+				displayPrompt: false,
+				optionsVal: [],
 			}
 		},
 		computed: {
@@ -382,6 +391,19 @@
 			},
 		},
 		methods: {
+			showOptionDialog(){
+				this.optionsVal = {
+					Inside: this.setDoor.InsideProfileID,
+					Outside: this.setDoor.OutsideProfileID,
+					CenterPanel: this.setDoor.CenterPanelID,
+					StileRail: this.setDoor.StileRailID,
+					Hardware: this.setDoor.HardwareID 
+				}
+				this.displayPrompt = true;
+			},
+			hidePrompt () {
+				this.displayPrompt = false;
+			},
 			get_Styles_CMaterial (brand_id) {
 				//clear select
 				this.setStyle = 'Select Style Group...';
@@ -451,7 +473,7 @@
 					DrawerStyleID: value.DrawerStyleID,
 					LgDrawerStyleID: value.LgDrawerStyleID,
 				};
-				
+
 				this.$store.dispatch('job/fetchMaterial', payload)
 					.then((response) => {
 						this.$vs.loading.close();
@@ -483,7 +505,7 @@
 				this.setFinish = 'Select Finish...';
 
 				this.setEdge =  'Select Edge Branding...',
-
+				this.setHinges = 'Select Hinges...';
 
 				this.$vs.loading();
 				
@@ -502,7 +524,8 @@
 			},
 			getEdge(value) {
 				this.setEdge =  'Select Edge Branding...';
-				console.log(this.setMaterial.ID, this.setColor.ID)
+				this.setHinges = 'Select Hinges...';
+
 				this.$vs.loading();
 				
 				// get Material select List
@@ -510,7 +533,7 @@
 					MaterialID: this.setMaterial.ID,
 					ColorID: this.setColor.ID,
 				};
-				
+				console.log(payload);
 				this.$store.dispatch('job/fetchEdge', payload)
 					.then((response) => {
 						this.$vs.loading.close();

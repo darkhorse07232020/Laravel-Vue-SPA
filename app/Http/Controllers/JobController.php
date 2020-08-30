@@ -9,10 +9,18 @@ use App\Model\Style\Style;
 use App\Model\Style\Style_Material;
 use App\Model\Style\Style_Color;
 use App\Model\Style\Style_Finish;
+use App\Model\Style\Style_Centerpanel;
+use App\Model\Style\Style_Hardware;
+use App\Model\Style\Style_Insideprofile;
+use App\Model\Style\Style_Outsideprofile;
+use App\Model\Style\Style_Stilerail;
 
 use App\Model\Cabinet\Cabinet_Material;
 use App\Model\Cabinet\Cabinet_Drwbox;
+use App\Model\Cabinet\Cabinet_hinge;
 
+use App\Model\Edge\Edge_banding;
+use App\Model\Edge\Edge_wood;
 
 
 //Import Libraries
@@ -59,7 +67,6 @@ class JobController extends Controller
             ->where('GroupID', $group_id)
             ->where('StyleType', 'Door')
             ->orderBy('Name')
-            ->select("Name", "ID", "BrandID", "MaterialID", "DrawerStyleID", "LgDrawerStyleID")
             ->get()->toArray();
 
         return response()->json($data, Response::HTTP_OK);
@@ -139,6 +146,28 @@ class JobController extends Controller
         $material_id = $request -> MaterialID;
         $color_id = $request -> ColorID;
         
+        $data = Edge_banding::join('edge_banding_wood', 'edge_banding.ID', '=', 'edge_banding_wood.EdgeBandingID')
+            ->where('edge_banding_wood.MaterialID', $material_id)
+            ->where('edge_banding_wood.ColorID', $color_id)
+            ->select('Name', 'ID')
+            ->get()->toArray();
+
+        $hinges = Cabinet_hinge::find(1)->get()->toArray();
+        return response()->json(['edges' => $data, 'hinges' => $hinges], Response::HTTP_OK);
+    }
+
+    public function getProfile(Request $request) {
+        $finish_str = $request -> FinishID;
+        
+        $finish = explode(",", $finish_str);
+        
+        $data = array();
+        foreach ($finish as $cond) {
+            $tmp = Style_Finish::where('ID', $cond)
+                ->select("Name", "ID")
+                ->first()->toArray();
+            array_push($data, $tmp);
+        }
         
         return response()->json($data, Response::HTTP_OK);
     }

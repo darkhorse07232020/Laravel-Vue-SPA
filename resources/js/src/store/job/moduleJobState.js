@@ -16,4 +16,5 @@ export default {
   colors: [],
   finish: [],
   edges: [],
+  profiles: [],
 }

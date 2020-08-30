@@ -26,3 +26,4 @@ Route::get('/job/material', 'JobController@getMaterial');
 Route::get('/job/color', 'JobController@getColor');
 Route::get('/job/finish', 'JobController@getFinish');
 Route::get('/job/edge', 'JobController@getEdge');
+Route::get('/job/profile', 'JobController@getProfile');

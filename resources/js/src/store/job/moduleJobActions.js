@@ -117,17 +117,41 @@ export default {
 
   fetchEdge ({ commit }, payload) {
 
-    const {FinishID} = payload;
+    const {MaterialID, ColorID} = payload;
     
     return new Promise((resolve, reject) => {
-      axios.get('/api/job/Edge', {
+      axios.get('/api/job/edge', {
         params: {
           MaterialID: MaterialID,
           ColorID: ColorID,
         }
       })
         .then((response) => {
+          console.log(response.data);
           commit('UPDATE_EDGES', response.data)
+          resolve(response)
+        })
+        .catch((error) => { reject(error) })
+    })
+  },
+
+  fetchProfile ({ commit }, payload) {
+
+    const {Inside, Outside, CenterPanel, StileRail, Hardware} = payload;
+    
+    return new Promise((resolve, reject) => {
+      axios.get('/api/job/profile', {
+        params: {
+          Inside: Inside,
+          Outside: Outside,
+          CenterPanel: CenterPanel,
+          StileRail: StileRail,
+          Hardware: Hardware,
+        }
+      })
+        .then((response) => {
+          console.log(response.data);
+          commit('UPDATE_PROFILES', response.data)
           resolve(response)
         })
         .catch((error) => { reject(error) })

@@ -32,5 +32,8 @@ export default {
   UPDATE_EDGES (state, edges) {
     state.edges = edges;
   },
+  UPDATE_PROFILES (state, profiles) {
+    state.profiles = profiles;
+  },
 }
 
