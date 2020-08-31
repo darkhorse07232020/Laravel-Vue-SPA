@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="row mx-6 my-6">
 	<div class="flex flex-wrap -mx-2">
 		<div class="w-full md:w-2/3 px-4">
 
@@ -143,7 +143,7 @@
 
 					<div class="flex px-6 mb-6 item_center">
 						<div class="vx-col sm:w-1/2 w-full px-4">
-							<img :src="`/images/doors/${setDoor.Name}/Door ${setDoor.Name} Thumbnail ${drawerData.door_code}.png`" alt="No-Image" width = '70' hegit = '70' @error="imageLoadError" />
+							<img :src="`/images/doors/${setDoor.Name}/Door ${setDoor.Name} Thumbnail ${drawerData.door_code}.png`" alt="No-Image" width = '70' hegit = '70' @error="imageLoadError" @click="showDrawerDialog(`/images/doors/${setDoor.Name}/Door ${setDoor.Name} ${drawerData.door_code}`)"/>
 						</div>
 						<div class="vx-col sm:w-1/2 w-full px-4">
 							<img :src="`/images/inside/${drawerData.inside_code}.png`" alt="No-Image" width = '70' hegit = '70' @error="imageLoadError" />
@@ -160,7 +160,7 @@
 
 					<div class="flex px-6 mb-6 item_center">
 						<div class="vx-col sm:w-1/2 w-full px-4">
-							<img :src="`/images/drawers/${setSDrawer.Name}/Drw ${setSDrawer.Name} Thumbnail ${drawerData.door_code}.png`" alt="No-Image" width = '70' hegit = '70' @error="imageLoadError" />
+							<img :src="`/images/drawers/${setSDrawer.Name}/Drw ${setSDrawer.Name} Thumbnail ${drawerData.door_code}.png`" alt="No-Image" width = '70' hegit = '70' @error="imageLoadError" @click="showDrawerDialog(`/images/drawers/${setSDrawer.Name}/Drw ${setSDrawer.Name} ${drawerData.door_code}`)" />
 						</div>
 						<div class="vx-col sm:w-1/2 w-full px-4">
 							<img :src="`/images/centerpanel/${drawerData.centerpanel_code}.png`" alt="No-Image" width = '70' hegit = '70' @error="imageLoadError" />
@@ -177,7 +177,7 @@
 
 					<div class="flex px-6 mb-6 item_center">
 						<div class="vx-col sm:w-1/2 w-full px-4">
-							<img :src="`/images/largedrawers/${setLDrawer.Name}/LgDrw ${setLDrawer.Name} Thumbnail ${drawerData.door_code}.png`" alt="No-Image" width = '70' hegit = '70' @error="imageLoadError" />
+							<img :src="`/images/largedrawers/${setLDrawer.Name}/LgDrw ${setLDrawer.Name} Thumbnail ${drawerData.door_code}.png`" alt="No-Image" width = '70' hegit = '70' @error="imageLoadError" @click="showDrawerDialog(`/images/largedrawers/${setLDrawer.Name}/LgDrw ${setLDrawer.Name} ${drawerData.door_code}`)" />
 						</div>
 						<div class="vx-col sm:w-1/2 w-full px-4">
 							<img :src="`/images/outside/${drawerData.outside_code}.png`" alt="No-Image" width = '70' hegit = '70' @error="imageLoadError" />
@@ -348,6 +348,7 @@
 	</div>
 	
 	<options-modal :displayPrompt="displayPrompt" :optionsVal = "optionsVal" @hideDisplayPrompt="hidePrompt" v-if="displayPrompt" ></options-modal>
+	<drawer-modal :displayDrawer="displayDrawer" :filePaths = "filePaths" @hideDisplayPrompt="hideDrawer" v-if="displayDrawer" ></drawer-modal>
 </div>
 
 </template>
@@ -355,11 +356,13 @@
 <script>
 	import vSelect from 'vue-select'
 	import OptionsModal from './modals/OptionsModal.vue'
+	import DrawerModal from './modals/DrawerModal.vue'
 
 	export default{
 		components: {
 			'v-select': vSelect,
 			OptionsModal,
+			DrawerModal,
 		},
 		data(){
 			return {
@@ -386,6 +389,11 @@
 					centerpanel: '',
 					stile: '',
 					hardware: '',
+				},
+
+				displayDrawer: false,
+				filePaths: {
+					path: '',
 				}
 			}
 		},
@@ -420,15 +428,17 @@
 		},
 		methods: {
 			showOptionDialog(){
-				// this.optionsVal = {
-				// 	defaultVal: {
-				// 		
-				// 	}
-				// }
 				this.displayPrompt = true;
 			},
 			hidePrompt () {
 				this.displayPrompt = false;
+			},
+			showDrawerDialog(val){
+				this.filePaths.path=val;
+				this.displayDrawer = true;
+			},
+			hideDrawer () {
+				this.displayDrawer = false;
 			},
 			get_Styles_CMaterial (brand_id) {
 

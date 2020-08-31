@@ -1,6 +1,6 @@
 <template>
   <div>
-    <vs-prompt
+    <vs-prompt 
       title="Door Options"
       accept-text= "Save"
       cancel-text = "Close"

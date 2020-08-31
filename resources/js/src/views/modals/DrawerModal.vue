@@ -1,23 +1,33 @@
 <template>
   <div>
-    <vs-prompt scroll overflow-hidden
-      :title="doorImageTitle"
+    <vs-prompt class="DrawerModal"
+      title="Door Image"
       cancel-text = "Close"
       button-cancel = "border"
-      buttons-hidden = "accept"
-      @cancel="removeTodo"
-      @close="init"
+      :buttons-hidden = true
       :active.sync="activePrompt">
         <div>
-            <div class="px-3 ml-6 mr-auto" v-if="profiles.insides">
-                <h4>Inside Profile</h4>
+          <div class="flex flex-wrap px-6 mb-6 ml-auto mr-auto">
+              <img class="ml-auto mr-auto" :src="`${filePaths.path}.png`" width="400" @error="imageLoadError" />
+          </div>
+        </div>
+        <hr>
+        <div class="flex px-3 mt-3">
+          <div class="flex flex-wrap w-4/5 px-6 ">
+            <div class =" pr-6 ">
+              <a :href="`${filePaths.path}.DXF`" download>
+                <vs-button type="border" size="default"  @click="">DXF</vs-button>
+              </a>
             </div>
-            <div class="flex flex-wrap px-6 mb-6">
-                <div class="px-3 ml-6" v-for="(inside, index) in profiles.insides" :key="index">
-                    <img :src="`/images/inside/${inside.Code}.png`" :width="`60`" :height="`60`" />
-                </div>
+            <div class =" pl-2 ">
+              <a :href="`${filePaths.path}.PDF`" download>
+                <vs-button type="border" size="default"  @click="">PDF</vs-button>
+              </a>
             </div>
-
+          </div>
+          <div class="flex flex-wrap w-1/5 pl-20">
+            <vs-button type="border" size="default"  @click="removeTodo">Close</vs-button>
+          </div>
         </div>
     </vs-prompt>
   </div>
@@ -26,35 +36,28 @@
 <script>
 export default {
   props: {
-    displayPrompt: {
+    displayDrawer: {
       type: Boolean,
       required: true
     },
-    optionsVal: {
+    filePaths: {
       type: Object,
       required: true
     }
   },
   data () {
     return {
-      inside_radio: '',
-      centerpanel_radio: '',
-      outside_radio: '',
-      stilerail_radio: '',
-      hardware_radio: '',
+      
     }
   },
   computed: {
     activePrompt: {
       get () {
-        return this.displayPrompt
+        return this.displayDrawer;
       },
       set (value) {
         this.$emit('hideDisplayPrompt', value)
       }
-    },
-    profiles () {
-      return this.$store.state.job.profiles;
     },
   },
   methods: {
@@ -66,40 +69,22 @@ export default {
       this.$emit('hideDisplayPrompt')
     },
     submitTodo () {
-      var tmp='';
-      tmp += (this.inside_radio.trim().length ? this.inside_radio.trim() + ' ' : '');
-      tmp += (this.stilerail_radio.trim().length ? this.stilerail_radio.trim() + ' ' : '');
-      tmp += (this.centerpanel_radio.trim().length ? this.centerpanel_radio.trim() + ' ' : '');
-      tmp += (this.outside_radio.trim().length ? this.outside_radio.trim() : '');
+      this.$emit('hideDisplayPrompt')
 
-      const payload = {
-        door_code: tmp,
-        inside_code: this.inside_radio.trim(),
-        centerpanel_code: this.centerpanel_radio.trim(),
-        outside_code: this.outside_radio.trim(),
-        hardware_code: this.hardware_radio.trim(),
-        stilerail_code: this.stilerail_radio.trim(),
-      };
-
-      this.$store.dispatch('job/setDrawerdatas', payload);
-    }
+    },
+    imageLoadError(event) {
+      event.target.src = "/images/1x1.png";
+      event.target.width = "400";
+    },
   },
   created () {
-    this.$vs.loading();
-
-    this.$store.dispatch('job/fetchProfiles', this.optionsVal)
-      .then(()=>{
-        this.$vs.loading.close();
-      })
-      .catch(error => {
-        this.$vs.loading.close();
-      })
+    console.log(this.filePaths.path);
   }
 }
 </script>
 
 <style lang="stylus">
-.con-vs-dialog .vs-dialog {
-    max-width: 100%;
+.DrawerModal .con-vs-dialog .vs-dialog {
+    max-width: 50%;
 }
 </style>

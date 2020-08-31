@@ -26,7 +26,7 @@ const router = new Router({
     // MAIN LAYOUT ROUTES
     // =============================================================================
             path: '',
-            component: () => import('./layouts/main/Main.vue'),
+            component: () => import('@/layouts/full-page/FullPage.vue'),
             children: [
         // =============================================================================
         // Theme Routes
@@ -35,11 +35,6 @@ const router = new Router({
                 path: '/',
                 name: 'home',
                 component: () => import('./views/Home.vue')
-              },
-              {
-                path: '/page2',
-                name: 'page-2',
-                component: () => import('./views/Page2.vue')
               },
             ],
         },
