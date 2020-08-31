@@ -40,8 +40,8 @@ class JobController extends Controller
     public function getStyle(Request $request) {
         $cond = $request -> condition;
         $data1 = Style_group::where('BrandID', $cond)
-            ->orderBy('Name')
-            ->select("Name", "ID", "BrandID")
+            ->orderBy('ListOrder')
+            ->select("Name", "ID", "BrandID", "SpecDefault")
             ->get()->toArray();
         
         $data2 = Cabinet_Material::where('BrandID', $cond)
@@ -119,7 +119,7 @@ class JobController extends Controller
 
         foreach ($colors as $cond) {
             $tmp = Style_Color::where('ID', $cond)
-                ->select("Name", "ID", "FinishID", "image")
+                ->select("Name", "ID", "FinishID", "image", "EdgeBandingDefaultID")
                 ->first()->toArray();
             array_push($data, $tmp);
         }

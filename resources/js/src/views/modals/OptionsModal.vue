@@ -5,6 +5,7 @@
       accept-text= "Save"
       cancel-text = "Close"
       button-cancel = "border"
+      scroll = true
       @cancel="removeTodo"
       @accept="submitTodo"
       @close="init"
@@ -17,9 +18,9 @@
           <div class="flex flex-wrap px-6 mb-6">
             <div class="px-3 ml-6" v-for="(inside, index) in profiles.insides" :key="index">
               <vs-radio v-model="inside_radio" :vs-value="inside.Code" @change="">
-                <img :src="`/images/inside/${inside.Code}.png`" :width="`60`" :height="`60`" />
+                <img :src="`/images/inside/${inside.Code}.png`" @error="imageLoadError" />
               </vs-radio><br>
-              <h6>{{inside.Name}}</h6>
+              <h6>{{inside.Name.trim()}}</h6>
             </div>
           </div>
         </div>
@@ -31,9 +32,9 @@
           <div class="flex flex-wrap px-6 mb-6">
             <div class="px-3 ml-6" v-for="(centerpanel, index) in profiles.centerpanels" :key="index">
               <vs-radio v-model="centerpanel_radio" :vs-value="centerpanel.Code" @change="">
-                <img :src="`/images/centerpanel/${centerpanel.Code}.png`" :width="`60`" :height="`60`" />
+                <img :src="`/images/centerpanel/${centerpanel.Code}.png`" @error="imageLoadError" />
               </vs-radio><br>
-              <h6>{{centerpanel.Name}}</h6>
+              <h6>{{centerpanel.Name.trim()}}</h6>
             </div>
           </div>
         </div>
@@ -45,9 +46,9 @@
           <div class="flex flex-wrap px-6 mb-6">
             <div class="px-3 ml-6" v-for="(outside, index) in profiles.outsides" :key="index">
               <vs-radio v-model="outside_radio" :vs-value="outside.Code" @change="">
-                <img :src="`/images/outside/${outside.Code}.png`" :width="`60`" :height="`60`" />
+                <img :src="`/images/outside/${outside.Code}.png`" @error="imageLoadError" />
               </vs-radio><br>
-              <h6>{{outside.Name}}</h6>
+              <h6>{{outside.Name.trim()}}</h6>
             </div>
           </div>
         </div>
@@ -59,9 +60,9 @@
           <div class="flex flex-wrap px-6 mb-6">
             <div class="px-3 ml-6" v-for="(stilerail, index) in profiles.stilerails" :key="index">
               <vs-radio v-model="stilerail_radio" :vs-value="stilerail.Code" @change="">
-                <img :src="`/images/stilerail/${stilerail.Code}.png`" :width="`100`" :height="`60`" />
+                <img :src="`/images/stilerail/${stilerail.Code}.png`" @error="imageLoadError" />
               </vs-radio><br>
-              <h6>{{stilerail.Name}}</h6>
+              <h6>{{stilerail.Name.trim()}}</h6>
             </div>
           </div>
         </div>
@@ -73,9 +74,9 @@
           <div class="flex flex-wrap px-6 mb-6">
             <div class="px-3 ml-6" v-for="(hardware, index) in profiles.hardwares" :key="index">
               <vs-radio v-model="hardware_radio" :vs-value="hardware.Code" @change="">
-                <img :src="`/images/hardware/${hardware.Code}.png`" :width="`60`" :height="`60`" />
+                <img :src="`/images/hardware/${hardware.Code}.png`" @error="imageLoadError" />
               </vs-radio><br>
-              <h6>{{hardware.Name}}</h6>
+              <h6>{{hardware.Name.trim()}}</h6>
             </div>
           </div>
         </div>
@@ -121,40 +122,45 @@ export default {
   methods: {
     removeTodo () {
       this.$emit('hideDisplayPrompt')
-      
     },
     init () {
       this.$emit('hideDisplayPrompt')
     },
     submitTodo () {
       var tmp='';
-      tmp += (this.inside_radio.trim().length ? this.inside_radio.trim() + ' ' : '');
-      tmp += (this.stilerail_radio.trim().length ? this.stilerail_radio.trim() + ' ' : '');
-      tmp += (this.centerpanel_radio.trim().length ? this.centerpanel_radio.trim() + ' ' : '');
-      tmp += (this.outside_radio.trim().length ? this.outside_radio.trim() : '');
+      tmp += (this.inside_radio ? this.inside_radio + ' ' : '');
+      tmp += (this.stilerail_radio ? this.stilerail_radio + ' ' : '');
+      tmp += (this.centerpanel_radio ? this.centerpanel_radio + ' ' : '');
+      tmp += (this.outside_radio ? this.outside_radio : '');
 
       const payload = {
         door_code: tmp,
-        inside_code: this.inside_radio.trim(),
-        centerpanel_code: this.centerpanel_radio.trim(),
-        outside_code: this.outside_radio.trim(),
-        hardware_code: this.hardware_radio.trim(),
-        stilerail_code: this.stilerail_radio.trim(),
+        inside_code: this.inside_radio,
+        centerpanel_code: this.centerpanel_radio,
+        outside_code: this.outside_radio,
+        hardware_code: this.hardware_radio,
+        stilerail_code: this.stilerail_radio,
       };
 
       this.$store.dispatch('job/setDrawerdatas', payload);
-    }
+    },
+    imageLoadError(event) {
+      event.target.src = "/images/1x1.png";
+      // event.target.height = "128";
+    },
   },
   created () {
-    this.$vs.loading();
 
-    this.$store.dispatch('job/fetchProfiles', this.optionsVal)
-      .then(()=>{
-        this.$vs.loading.close();
-      })
-      .catch(error => {
-        this.$vs.loading.close();
-      })
+    this.inside_radio = this.optionsVal.inside.Code;
+
+    this.centerpanel_radio = this.optionsVal.centerpanel.Code;
+
+    this.outside_radio = this.optionsVal.outside.Code;
+
+    this.stilerail_radio = this.optionsVal.stile.Code;
+
+    this.hardware_radio = this.optionsVal.hardware.Code;
+
   }
 }
 </script>

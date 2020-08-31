@@ -127,7 +127,6 @@ export default {
         }
       })
         .then((response) => {
-          console.log(response.data);
           commit('UPDATE_EDGES', response.data)
           resolve(response)
         })
@@ -150,7 +149,6 @@ export default {
         }
       })
         .then((response) => {
-          // console.log(response.data);
           commit('UPDATE_PROFILES', response.data)
           resolve(response)
         })
