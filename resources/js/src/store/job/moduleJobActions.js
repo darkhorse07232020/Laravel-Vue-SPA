@@ -157,7 +157,6 @@ export default {
   },
 
   setDrawerdatas ({ commit }, payload) {
-    console.log(payload);
     commit('UPDATE_DRAWERDATAS', payload);
   },
 }

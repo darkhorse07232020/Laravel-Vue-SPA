@@ -1,132 +1,232 @@
 <template>
 <div class="row mx-6 my-6">
 	<div class="flex flex-wrap -mx-2">
-		<div class="w-full md:w-2/3 px-4">
+		<div class="w-full md:w-3/5 px-4">
 
 			<!-- Door & Drawer -->
-			<vs-card vs-justify="center" vs-align="center">
-				<div slot="header">
-					<span class="headText"><pre>  Doors & Drawers</pre></span>
-				</div>
-
-				<div style="font-size:1em">
-					<!-- Image List -->
-					<div class="flex flex-wrap px-6 mb-6">
-						<div class="px-3 ml-auto mr-auto" v-for="(image, index) in images" :key="index">
-							<!-- <vs-input class="inputx" :placeholder="image.ID" /> -->
-							<vs-radio v-model="radio_brand" :vs-value="image.ID" @change="get_Styles_CMaterial(image.ID)">
-								<img :src="`/images/logos/${image.logo_image_small}`" :width="image.image_width" :height="image.image_height" />
-							</vs-radio>
-						</div>
-						<!-- {{radio_brand}} -->
+			<div class="w-full px-4">
+				<vs-card vs-justify="center" vs-align="center">
+					<div slot="header">
+						<span class="headText"><pre>  Doors & Drawers</pre></span>
 					</div>
 
-					<!-- Style Group -->
-					<div class="flex px-6 mb-6 item_center">
-						<div class="vx-col sm:w-1/4 w-full text_end">
-							<span><b>Style Group <span style="color:red">*</span></b></span>
+					<div style="font-size:1em">
+						<!-- Image List -->
+						<div class="flex flex-wrap px-6 mb-6">
+							<div class="px-3 ml-auto mr-auto" v-for="(image, index) in images" :key="index">
+								<!-- <vs-input class="inputx" :placeholder="image.ID" /> -->
+								<vs-radio v-model="radio_brand" :vs-value="image.ID" @change="get_Styles_CMaterial(image.ID)">
+									<img :src="`/images/logos/${image.logo_image_small}`" :width="image.image_width" :height="image.image_height" />
+								</vs-radio>
+							</div>
 						</div>
-						<div class="vx-col sm:w-1/2 w-full">
-							<v-select label="Name" v-model="setStyle" :options="styles_cmaterial.styles" @input="getDoors" />
-						</div>
-					</div>
 
-					<!-- Door -->
-					<div class="flex px-6 mb-6 item_center">
-						<div class="vx-col sm:w-1/4 w-full text_end">
-							<span><b>Door <span style="color:red">*</span></b></span>
+						<!-- Style Group -->
+						<div class="flex px-6 mb-6 item_center">
+							<div class="vx-col sm:w-1/4 w-full text_end">
+								<span><b>Style Group <span style="color:red">*</span></b></span>
+							</div>
+							<div class="vx-col sm:w-1/2 w-full">
+								<v-select label="Name" v-model="setStyle" :options="styles_cmaterial.styles" @input="getDoors" />
+							</div>
 						</div>
-						<div class="vx-col sm:w-1/2 w-full">
-							<v-select label="Name" v-model="setDoor" :options="doors" @input="getMaterial" />
-						</div>
-						<div class="vx-col sm:w-1/4 w-full px-2">
-							<vs-button type="flat" size="small" style="font-size: 0.9em; padding:0.5em 0.7em;" @click="showOptionDialog">Options</vs-button>
-							<vs-button type="flat" size="small" style="font-size: 0.9em; padding:0.5em 0.7em;" @click="showPDF()">Spec</vs-button>
-						</div>
-					</div>
 
-					<!-- Small Drawer -->
-					<div class="flex px-6 mb-6 item_center">
-						<div class="vx-col sm:w-1/4 w-full text_end">
-							<span><b>Small Drawer <span style="color:red">*</span></b></span>
+						<!-- Door -->
+						<div class="flex px-6 mb-6 item_center">
+							<div class="vx-col sm:w-1/4 w-full text_end">
+								<span><b>Door <span style="color:red">*</span></b></span>
+							</div>
+							<div class="vx-col sm:w-1/2 w-full">
+								<v-select label="Name" v-model="setDoor" :options="doors" @input="getMaterial" />
+							</div>
+							<div class="vx-col sm:w-1/4 w-full px-2">
+								<vs-button type="flat" size="small" style="font-size: 0.9em; padding:0.5em 0.7em;" @click="showOptionDialog">Options</vs-button>
+								<vs-button type="flat" size="small" style="font-size: 0.9em; padding:0.5em 0.7em;" @click="showPDF()">Spec</vs-button>
+							</div>
 						</div>
-						<div class="vx-col sm:w-1/2 w-full">
-							<v-select label="Name" v-model="setSDrawer" :options="materials.Drawer" @input="" />
-						</div>
-					</div>
 
-					<!-- Large Drawer -->
-					<div class="flex px-6 mb-6 item_center">
-						<div class="vx-col sm:w-1/4 w-full text_end">
-							<span><b>Large Drawer <span style="color:red">*</span></b></span>
+						<!-- Small Drawer -->
+						<div class="flex px-6 mb-6 item_center">
+							<div class="vx-col sm:w-1/4 w-full text_end">
+								<span><b>Small Drawer <span style="color:red">*</span></b></span>
+							</div>
+							<div class="vx-col sm:w-1/2 w-full">
+								<v-select label="Name" v-model="setSDrawer" :options="materials.Drawer" @input="" />
+							</div>
 						</div>
-						<div class="vx-col sm:w-1/2 w-full">
-							<v-select label="Name" v-model="setLDrawer" :options="materials.LgDrawer" @input="" />
-						</div>
-					</div>
 
-					<!-- Materials -->
-					<div class="flex px-6 mb-6 item_center">
-						<div class="vx-col sm:w-1/4 w-full text_end">
-							<span><b>Material <span style="color:red">*</span></b></span>
+						<!-- Large Drawer -->
+						<div class="flex px-6 mb-6 item_center">
+							<div class="vx-col sm:w-1/4 w-full text_end">
+								<span><b>Large Drawer <span style="color:red">*</span></b></span>
+							</div>
+							<div class="vx-col sm:w-1/2 w-full">
+								<v-select label="Name" v-model="setLDrawer" :options="materials.LgDrawer" @input="" />
+							</div>
 						</div>
-						<div class="vx-col sm:w-1/2 w-full">
-							<v-select label="Name" v-model="setMaterial" :options="materials.Material" @input="getColor" >
-								<template slot="option" slot-scope="option">
-									<img :src="`/images/finish/${option.Name}.jpg`" width='40' @error="imageLoadError" />
-									{{ option.Name }}
-								</template>
-							</v-select>
-						</div>
-					</div>
 
-					<!-- Color/Pattern -->
-					<div class="flex px-6 mb-6 item_center">
-						<div class="vx-col sm:w-1/4 w-full text_end">
-							<span><b>Color/Pattern <span style="color:red">*</span></b></span>
+						<!-- Materials -->
+						<div class="flex px-6 mb-6 item_center">
+							<div class="vx-col sm:w-1/4 w-full text_end">
+								<span><b>Material <span style="color:red">*</span></b></span>
+							</div>
+							<div class="vx-col sm:w-1/2 w-full">
+								<v-select label="Name" v-model="setMaterial" :options="materials.Material" @input="getColor" >
+									<template slot="option" slot-scope="option">
+										<img :src="`/images/finish/${option.Name}.jpg`" width='40' @error="imageLoadError" />
+										{{ option.Name }}
+									</template>
+								</v-select>
+							</div>
 						</div>
-						<div class="vx-col sm:w-1/2 w-full">
-							<v-select label="Name" v-model="setColor" :options="colors" @input="getFinish" >
-								<template slot="option" slot-scope="option">
-									<img :src="`/images/finish/${materials.Material.Name} ${option.Name}.jpg`" width='40' @error="imageLoadError" />
-									{{ option.Name }}
-								</template>
-							</v-select>
-						</div>
-					</div>
 
-					<!-- Finish -->
-					<div class="flex px-6 mb-6 item_center">
-						<div class="vx-col sm:w-1/4 w-full text_end">
-							<span><b>Finish <span style="color:red">*</span></b></span>
+						<!-- Color/Pattern -->
+						<div class="flex px-6 mb-6 item_center">
+							<div class="vx-col sm:w-1/4 w-full text_end">
+								<span><b>Color/Pattern <span style="color:red">*</span></b></span>
+							</div>
+							<div class="vx-col sm:w-1/2 w-full">
+								<v-select label="Name" v-model="setColor" :options="colors" @input="getFinish" >
+									<template slot="option" slot-scope="option">
+										<img :src="`/images/finish/${materials.Material.Name} ${option.Name}.jpg`" width='40' @error="imageLoadError" />
+										{{ option.Name }}
+									</template>
+								</v-select>
+							</div>
 						</div>
-						<div class="vx-col sm:w-1/2 w-full">
-							<v-select label="Name" v-model="setFinish" :options="finish" @input="getEdge" />
-						</div>
-					</div>
 
-					<!-- Header Note -->
-					<div class="flex px-6">
-						<div class="vx-col sm:w-1/4 w-full text_end">
-							<span><b>Header Note</b></span>
+						<!-- Finish -->
+						<div class="flex px-6 mb-6 item_center">
+							<div class="vx-col sm:w-1/4 w-full text_end">
+								<span><b>Finish <span style="color:red">*</span></b></span>
+							</div>
+							<div class="vx-col sm:w-1/2 w-full">
+								<v-select label="Name" v-model="setFinish" :options="finish" @input="getEdge" />
+							</div>
 						</div>
-						<div class="vx-col sm:w-1/2 w-full">
-							<vs-textarea v-model="textarea" height="100px" />
+
+						<!-- Header Note -->
+						<div class="flex px-6">
+							<div class="vx-col sm:w-1/4 w-full text_end">
+								<span><b>Header Note</b></span>
+							</div>
+							<div class="vx-col sm:w-1/2 w-full">
+								<vs-textarea v-model="textarea" height="100px" />
+							</div>
+						</div>
+						<!-- Price Sheet -->
+						<div class="flex px-6 mb-2">
+							<div class="vx-col sm:w-1/4 w-full text_end"></div>
+							<div class="vx-col sm:w-1/2 w-full">
+								<vs-button type="relief" @click="">Price Sheet</vs-button>
+							</div>
 						</div>
 					</div>
-					<!-- Price Sheet -->
-					<div class="flex px-6 mb-2">
-						<div class="vx-col sm:w-1/4 w-full text_end"></div>
-						<div class="vx-col sm:w-1/2 w-full">
-							<vs-button type="relief" @click="">Price Sheet</vs-button>
+				</vs-card>
+			</div>
+
+			<!-- Cabinet panel -->
+			<div class="w-full px-4">
+				<vs-card vs-justify="center" vs-align="center">
+					<div slot="header">
+						<span class="headText"><pre>  Cabinet Materials</pre></span>
+					</div>
+					<div style="font-size:1em">
+
+						<!-- Cabinet Box Material -->
+						<div class="flex px-6 mb-6 item_center">
+							<div class="vx-col sm:w-1/4 w-full text_end">
+								<span><b>Cabinet Box Material <span style="color:red">*</span></b></span>
+							</div>
+							<div class="vx-col sm:w-1/2 w-full">
+								<v-select label="Name" v-model="setCMaterial" :options="styles_cmaterial.cmaterial" @input="" >
+								</v-select>
+							</div>
+						</div>
+						
+						<!-- Drawer Box -->
+						<div class="flex px-6 mb-6 item_center">
+							<div class="vx-col sm:w-1/4 w-full text_end">
+								<span><b>Drawer Box <span style="color:red">*</span></b></span>
+							</div>
+							<div class="vx-col sm:w-1/2 w-full">
+								<v-select label="Name" v-model="setDBox" :options="styles_cmaterial.dbox" @input="" />
+							</div>
+						</div>
+
+						<!-- Hinges -->
+						<div class="flex px-6 mb-3 item_center">
+							<div class="vx-col sm:w-1/4 w-full text_end">
+								<span><b>Hinges <span style="color:red">*</span></b></span>
+							</div>
+							<div class="vx-col sm:w-1/2 w-full">
+								<v-select label="Name" v-model="setHinges" :options="edges.hinges" />
+							</div>
+						</div>
+
+						<hr>
+
+						<!-- Fin End Material -->
+						<div class="flex px-6 mt-3 mb-6 item_center">
+							<div class="vx-col sm:w-1/4 w-full text_end">
+								<span><b>Fin End Material <span style="color:red">*</span></b></span>
+							</div>
+							<div class="vx-col sm:w-1/2 w-full">
+								<v-select <v-select label="Name" v-model="setMaterial" :options="materials.Material" @input="" >
+									<template slot="option" slot-scope="option">
+										<img :src="`/images/finish/${option.Name}.jpg`" width='40' @error="imageLoadError" />
+										{{ option.Name }}
+									</template>
+								</v-select>
+							</div>
+						</div>
+
+						<!-- Fin End Color -->
+						<div class="flex px-6 mb-6 item_center">
+							<div class="vx-col sm:w-1/4 w-full text_end">
+								<span><b>Fin End Color <span style="color:red">*</span></b></span>
+							</div>
+							<div class="vx-col sm:w-1/2 w-full">
+								<v-select  label="Name" v-model="setColor" :options="colors" />
+							</div>
+						</div>
+
+						<!-- Fin End Finish -->
+						<div class="flex px-6 mb-6 item_center">
+							<div class="vx-col sm:w-1/4 w-full text_end">
+								<span><b>Fin End Finish <span style="color:red">*</span></b></span>
+							</div>
+							<div class="vx-col sm:w-1/2 w-full">
+								<v-select label="Name" v-model="setFinish" :options="finish" />
+							</div>
+						</div>
+
+						<!-- Edge Banding -->
+						<div class="flex px-6 mb-6 item_center">
+							<div class="vx-col sm:w-1/4 w-full text_end">
+								<span><b>Edge Banding <span style="color:red">*</span></b></span>
+							</div>
+							<div class="vx-col sm:w-1/2 w-full">
+								<v-select label="Name" v-model="setEdge" :options="edges.edges" />
+							</div>
+						</div>
+
+						<!-- Admin Note -->
+						<div class="flex px-6">
+							<div class="vx-col sm:w-1/4 w-full text_end">
+								<span><b>Admin Note</b></span>
+							</div>
+							<div class="vx-col sm:w-1/2 w-full">
+								<vs-textarea v-model="textarea" height="100px" />
+							</div>
 						</div>
 					</div>
-				</div>
-			</vs-card>
+				</vs-card>
+			</div>
 		</div>
 
 		<!-- Drawings / Door Options -->
-		<div class="w-full md:w-1/3 px-4">
+		<div class="w-full md:w-2/5 px-4">
 			<vs-card vs-justify="center" vs-align="center">
 				<div slot="header">
 					<div class="flex item_center">
@@ -143,10 +243,11 @@
 
 					<div class="flex px-6 mb-6 item_center">
 						<div class="vx-col sm:w-1/2 w-full px-4">
-							<img :src="`/images/doors/${setDoor.Name}/Door ${setDoor.Name} Thumbnail ${drawerData.door_code}.png`" alt="No-Image" width = '70' hegit = '70' @error="imageLoadError" @click="showDrawerDialog(`/images/doors/${setDoor.Name}/Door ${setDoor.Name} ${drawerData.door_code}`)"/>
+							<!-- <img :src="`/images/doors/${setDoor.Name}/Door ${setDoor.Name} Thumbnail ${drawerData.door_code}.png`" alt="No-Image" width = '100%' @error="imageLoadError" @click="showDrawerDialog(`/images/doors/${setDoor.Name}/Door ${setDoor.Name} ${drawerData.door_code}`)" /> -->
+							 <img :src="`/images/doors/${setDoor.Name}/Door ${setDoor.Name} Thumbnail ${drawerData.door_code}.png`" alt="No-Image" width = '100%' @error="imageLoadError" @click="showOptionDialog" />
 						</div>
 						<div class="vx-col sm:w-1/2 w-full px-4">
-							<img :src="`/images/inside/${drawerData.inside_code}.png`" alt="No-Image" width = '70' hegit = '70' @error="imageLoadError" />
+							<img :src="`/images/inside/${drawerData.inside_code}.png`" alt="No-Image" width = '100%' @error="imageLoadError" />
 						</div>
 					</div>
 					<div class="flex px-6 mb-6 item_center">
@@ -160,10 +261,10 @@
 
 					<div class="flex px-6 mb-6 item_center">
 						<div class="vx-col sm:w-1/2 w-full px-4">
-							<img :src="`/images/drawers/${setSDrawer.Name}/Drw ${setSDrawer.Name} Thumbnail ${drawerData.door_code}.png`" alt="No-Image" width = '70' hegit = '70' @error="imageLoadError" @click="showDrawerDialog(`/images/drawers/${setSDrawer.Name}/Drw ${setSDrawer.Name} ${drawerData.door_code}`)" />
+							<img :src="`/images/drawers/${setSDrawer.Name}/Drw ${setSDrawer.Name} Thumbnail ${drawerData.door_code}.png`" alt="No-Image" width = '100%' @error="imageLoadError" @click="showDrawerDialog(`/images/drawers/${setSDrawer.Name}/Drw ${setSDrawer.Name} ${drawerData.door_code}`)" />
 						</div>
 						<div class="vx-col sm:w-1/2 w-full px-4">
-							<img :src="`/images/centerpanel/${drawerData.centerpanel_code}.png`" alt="No-Image" width = '70' hegit = '70' @error="imageLoadError" />
+							<img :src="`/images/centerpanel/${drawerData.centerpanel_code}.png`" alt="No-Image" width = '100%' @error="imageLoadError" />
 						</div>
 					</div>
 					<div class="flex px-6 mb-6 item_center">
@@ -177,10 +278,10 @@
 
 					<div class="flex px-6 mb-6 item_center">
 						<div class="vx-col sm:w-1/2 w-full px-4">
-							<img :src="`/images/largedrawers/${setLDrawer.Name}/LgDrw ${setLDrawer.Name} Thumbnail ${drawerData.door_code}.png`" alt="No-Image" width = '70' hegit = '70' @error="imageLoadError" @click="showDrawerDialog(`/images/largedrawers/${setLDrawer.Name}/LgDrw ${setLDrawer.Name} ${drawerData.door_code}`)" />
+							<img :src="`/images/largedrawers/${setLDrawer.Name}/LgDrw ${setLDrawer.Name} Thumbnail ${drawerData.door_code}.png`" alt="No-Image" width = '100%' @error="imageLoadError" @click="showDrawerDialog(`/images/largedrawers/${setLDrawer.Name}/LgDrw ${setLDrawer.Name} ${drawerData.door_code}`)" />
 						</div>
 						<div class="vx-col sm:w-1/2 w-full px-4">
-							<img :src="`/images/outside/${drawerData.outside_code}.png`" alt="No-Image" width = '70' hegit = '70' @error="imageLoadError" />
+							<img :src="`/images/outside/${drawerData.outside_code}.png`" alt="No-Image" width = '100%' @error="imageLoadError" />
 						</div>
 					</div>
 					<div class="flex px-6 mb-6 item_center">
@@ -194,10 +295,10 @@
 
 					<div class="flex px-6 mb-6 item_center">
 						<div class="vx-col sm:w-1/2 w-full px-4">
-							<img :src="`/images/hardware/${drawerData.hardware_code}.png`" alt="No-Image" width = '70' hegit = '70' @error="imageLoadError" />
+							<img :src="`/images/hardware/${drawerData.hardware_code}.png`" alt="No-Image" width = '100%' @error="imageLoadError" />
 						</div>
 						<div class="vx-col sm:w-1/2 w-full px-4">
-							<img :src="`/images/stilerail/${drawerData.stilerail_code}.png`" alt="No-Image" width = '70' hegit = '70' @error="imageLoadError" />
+							<img :src="`/images/stilerail/${drawerData.stilerail_code}.png`" alt="No-Image" width = '100%' @error="imageLoadError" />
 						</div>
 					</div>
 					<div class="flex px-6 mb-6 item_center">
@@ -214,106 +315,10 @@
 	</div>
 
 	<!-- Cabinet Materials -->
-	<div class="flex flex-wrap -mx-2">
-		<div class="w-full md:w-2/3 px-4">
-			<vs-card vs-justify="center" vs-align="center">
-				<div slot="header">
-					<span class="headText"><pre>  Cabinet Materials</pre></span>
-				</div>
-				<div style="font-size:1em">
-
-					<!-- Cabinet Box Material -->
-					<div class="flex px-6 mb-6 item_center">
-						<div class="vx-col sm:w-1/4 w-full text_end">
-							<span><b>Cabinet Box Material <span style="color:red">*</span></b></span>
-						</div>
-						<div class="vx-col sm:w-1/2 w-full">
-							<v-select label="Name" v-model="setCMaterial" :options="styles_cmaterial.cmaterial" @input="" >
-							</v-select>
-						</div>
-					</div>
-					
-					<!-- Drawer Box -->
-					<div class="flex px-6 mb-6 item_center">
-						<div class="vx-col sm:w-1/4 w-full text_end">
-							<span><b>Drawer Box <span style="color:red">*</span></b></span>
-						</div>
-						<div class="vx-col sm:w-1/2 w-full">
-							<v-select label="Name" v-model="setDBox" :options="styles_cmaterial.dbox" @input="" />
-						</div>
-					</div>
-
-					<!-- Hinges -->
-					<div class="flex px-6 mb-3 item_center">
-						<div class="vx-col sm:w-1/4 w-full text_end">
-							<span><b>Hinges <span style="color:red">*</span></b></span>
-						</div>
-						<div class="vx-col sm:w-1/2 w-full">
-							<v-select label="Name" v-model="setHinges" :options="edges.hinges" />
-						</div>
-					</div>
-
-					<hr>
-
-					<!-- Fin End Material -->
-					<div class="flex px-6 mt-3 mb-6 item_center">
-						<div class="vx-col sm:w-1/4 w-full text_end">
-							<span><b>Fin End Material <span style="color:red">*</span></b></span>
-						</div>
-						<div class="vx-col sm:w-1/2 w-full">
-							<v-select <v-select label="Name" v-model="setMaterial" :options="materials.Material" @input="" >
-								<template slot="option" slot-scope="option">
-									<img :src="`/images/finish/${option.Name}.jpg`" width='40' @error="imageLoadError" />
-									{{ option.Name }}
-								</template>
-							</v-select>
-						</div>
-					</div>
-
-					<!-- Fin End Color -->
-					<div class="flex px-6 mb-6 item_center">
-						<div class="vx-col sm:w-1/4 w-full text_end">
-							<span><b>Fin End Color <span style="color:red">*</span></b></span>
-						</div>
-						<div class="vx-col sm:w-1/2 w-full">
-							<v-select  label="Name" v-model="setColor" :options="colors" />
-						</div>
-					</div>
-
-					<!-- Fin End Finish -->
-					<div class="flex px-6 mb-6 item_center">
-						<div class="vx-col sm:w-1/4 w-full text_end">
-							<span><b>Fin End Finish <span style="color:red">*</span></b></span>
-						</div>
-						<div class="vx-col sm:w-1/2 w-full">
-							<v-select label="Name" v-model="setFinish" :options="finish" />
-						</div>
-					</div>
-
-					<!-- Edge Banding -->
-					<div class="flex px-6 mb-6 item_center">
-						<div class="vx-col sm:w-1/4 w-full text_end">
-							<span><b>Edge Banding <span style="color:red">*</span></b></span>
-						</div>
-						<div class="vx-col sm:w-1/2 w-full">
-							<v-select label="Name" v-model="setEdge" :options="edges.edges" />
-						</div>
-					</div>
-
-					<!-- Admin Note -->
-					<div class="flex px-6">
-						<div class="vx-col sm:w-1/4 w-full text_end">
-							<span><b>Admin Note</b></span>
-						</div>
-						<div class="vx-col sm:w-1/2 w-full">
-							<vs-textarea v-model="textarea" height="100px" />
-						</div>
-					</div>
-				</div>
-			</vs-card>
-		</div>
-		<div class="w-full md:w-1/3 px-4">
-			<vs-card vs-justify="center" vs-align="center">
+	<!-- <div class="flex flex-wrap -mx-2">
+		
+		<div class="w-full md:w-1/3 px-4"> -->
+			<!-- <vs-card vs-justify="center" vs-align="center">
 				<div slot="header">
 					<span class="headText"><pre>  Did you know?</pre></span>
 				</div>
@@ -343,9 +348,9 @@
 						</div>
 					</div>
 				</div>
-			</vs-card>
-		</div>
-	</div>
+			</vs-card> -->
+		<!-- </div>
+	</div> -->
 	
 	<options-modal :displayPrompt="displayPrompt" :optionsVal = "optionsVal" @hideDisplayPrompt="hidePrompt" v-if="displayPrompt" ></options-modal>
 	<drawer-modal :displayDrawer="displayDrawer" :filePaths = "filePaths" @hideDisplayPrompt="hideDrawer" v-if="displayDrawer" ></drawer-modal>
@@ -384,6 +389,7 @@
 				displayPrompt: false,
 				
 				optionsVal: {
+					doorName: '',
 					inside: '',
 					outside: '',
 					centerpanel: '',
@@ -595,7 +601,7 @@
 				var inside_radio = '', outside_radio = '', centerpanel_radio = '', hardware_radio = '', stilerail_radio = '';
 				this.$store.dispatch('job/fetchProfiles', payload)
 					.then(()=>{
-
+						this.optionsVal.doorName=this.setDoor.Name;
 						if(defaultVal.inside && this.profiles.insides.length) {
 							this.optionsVal.inside = this.profiles.insides.find(element => element.ID == defaultVal.inside);
 							

@@ -77,9 +77,6 @@ export default {
       event.target.height = "500";
     },
   },
-  created () {
-    console.log(this.filePaths.path);
-  }
 }
 </script>
 
