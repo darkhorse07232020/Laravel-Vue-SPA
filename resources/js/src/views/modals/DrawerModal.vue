@@ -8,7 +8,7 @@
       :active.sync="activePrompt">
         <div>
           <div class="flex flex-wrap px-6 mb-6 ml-auto mr-auto">
-              <img class="ml-auto mr-auto" :src="`${filePaths.path}.png`" width="400" @error="imageLoadError" />
+              <img class="ml-auto mr-auto" :src="`${filePaths.path}.png`" height="500" @error="imageLoadError" />
           </div>
         </div>
         <hr>
@@ -74,7 +74,7 @@ export default {
     },
     imageLoadError(event) {
       event.target.src = "/images/1x1.png";
-      event.target.width = "400";
+      event.target.height = "500";
     },
   },
   created () {
