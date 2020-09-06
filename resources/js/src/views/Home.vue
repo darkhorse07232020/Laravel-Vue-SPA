@@ -172,11 +172,11 @@
 								<span><b>Fin End Material <span style="color:red">*</span></b></span>
 							</div>
 							<div class="vx-col sm:w-1/2 w-full">
-								<v-select <v-select label="Name" v-model="setMaterial" :options="materials.Material" @input="" >
-									<template slot="option" slot-scope="option">
+								<v-select <v-select label="Name" v-model="setFMaterial" @input="" >
+									<!-- <template slot="option" slot-scope="option">
 										<img :src="`/images/finish/${option.Name}.jpg`" width='40' @error="imageLoadError" />
 										{{ option.Name }}
-									</template>
+									</template> -->
 								</v-select>
 							</div>
 						</div>
@@ -187,7 +187,7 @@
 								<span><b>Fin End Color <span style="color:red">*</span></b></span>
 							</div>
 							<div class="vx-col sm:w-1/2 w-full">
-								<v-select  label="Name" v-model="setColor" :options="colors" />
+								<v-select  label="Name" v-model="setColor" />
 							</div>
 						</div>
 
@@ -197,7 +197,7 @@
 								<span><b>Fin End Finish <span style="color:red">*</span></b></span>
 							</div>
 							<div class="vx-col sm:w-1/2 w-full">
-								<v-select label="Name" v-model="setFinish" :options="finish" />
+								<v-select label="Name" v-model="setFinish" />
 							</div>
 						</div>
 
@@ -385,6 +385,7 @@
 				setDBox: 'Select Drawer Box...',
 				setEdge: 'Select Edge Branding...',
 				setHinges: 'Select Hinges...',
+				setFMaterial: 'Select Material...',
 
 				displayPrompt: false,
 				
@@ -508,6 +509,12 @@
 						this.setSDrawer = foundDrawer;
 						this.setLDrawer = this.materials.LgDrawer[0];
 						this.setMaterial = foundMaterial;
+						this.setFMaterial = foundMaterial.Name;
+
+						if(this.setDoor.ID==49 || this.setDoor.ID==810 || this.setDoor.ID==964 || this.setDoor.ID==965) {
+							this.setFMaterial="Complimentary Laminate";
+						}
+
 						this.getColor(this.setMaterial);
 						this.$vs.loading.close();
 					})
