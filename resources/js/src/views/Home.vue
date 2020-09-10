@@ -187,7 +187,7 @@
 								<span><b>Fin End Color <span style="color:red">*</span></b></span>
 							</div>
 							<div class="vx-col sm:w-1/2 w-full">
-								<v-select  label="Name" v-model="setColor" />
+								<v-select  label="Name" v-model="setFColor" />
 							</div>
 						</div>
 
@@ -197,7 +197,7 @@
 								<span><b>Fin End Finish <span style="color:red">*</span></b></span>
 							</div>
 							<div class="vx-col sm:w-1/2 w-full">
-								<v-select label="Name" v-model="setFinish" />
+								<v-select label="Name" v-model="setFFinish" />
 							</div>
 						</div>
 
@@ -379,12 +379,14 @@
 				setSDrawer: 'Select Small Drawer...',
 				setMaterial: 'Select Material...',
 				setColor: 'Select Color...',
-				setFinish: 'Select Color...',
+				setFinish: 'Select Finish...',
 
 				setCMaterial: 'Select Cabinet Box Material...',
 				setDBox: 'Select Drawer Box...',
 				setEdge: 'Select Edge Branding...',
 				setHinges: 'Select Hinges...',
+				setFColor: 'Select Color...',
+				setFFinish: 'Select Fin End Finish...',
 				setFMaterial: 'Select Material...',
 
 				displayPrompt: false,
@@ -509,10 +511,10 @@
 						this.setSDrawer = foundDrawer;
 						this.setLDrawer = this.materials.LgDrawer[0];
 						this.setMaterial = foundMaterial;
-						this.setFMaterial = foundMaterial.Name;
+						this.setFMaterial = {"ID": foundMaterial.ID, "Name": foundMaterial.Name};
 
 						if(this.setDoor.ID==49 || this.setDoor.ID==810 || this.setDoor.ID==964 || this.setDoor.ID==965) {
-							this.setFMaterial="Complimentary Laminate";
+							this.setFMaterial.Name="Complimentary Laminate";
 						}
 
 						this.getColor(this.setMaterial);
@@ -544,7 +546,7 @@
 			getFinish(value) {
 
 				this.$vs.loading();
-				
+				this.setFColor = {"ID": this.setColor.ID, "Name": this.setColor.Name};
 				// get Material select List
 				const payload = {
 					FinishID: value.FinishID,
@@ -573,10 +575,30 @@
 				};
 				this.$store.dispatch('job/fetchEdge', payload)
 					.then((response) => {
-						const found = this.edges.edges.find(element => element.ID == this.setColor.EdgeBandingDefaultID);
+						if(this.setDoor.ID==138) {
+							this.edges.edges=[{"ID": 13, "Name": "See Header Notes"}, {"ID": 2, "Name": "Paintable PVC"}];
+						}
+						const found = this.edges.edges[0];
 
 						this.setEdge = found;
 						this.setHinges = this.edges.hinges[0];
+						//Stella-HG Rule
+						const temp = this.setFinish;
+						this.setFFinish={"ID": temp.ID, "Name": temp.Name};
+
+						if(this.setDoor.ID==138) {
+							this.setFFinish.ID=63;
+							this.setFFinish.Name="F – High Gloss – 90";
+
+							this.setEdge.ID=13;
+							this.setEdge.Name="See Header Notes";
+
+							this.setFColor.ID=1973;
+							this.setFColor.Name="Custom Paint – SB";
+
+							this.setFMaterial.ID = 233;
+							this.setFMaterial.Name = "Formica – Solid Colors – Gloss";
+						}
 
 						this.getInitModal();
 						this.$vs.loading.close();
