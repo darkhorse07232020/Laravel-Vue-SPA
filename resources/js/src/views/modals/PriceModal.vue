@@ -1,31 +1,38 @@
 <template>
   <div>
-    <vs-prompt class="DrawerModal"
-      title="Door Image"
+    <vs-prompt class="PriceModal"
+      title="Price Table"
       cancel-text = "Close"
       button-cancel = "border"
       :buttons-hidden = true
       :active.sync="activePrompt">
-        <div>
-          <div class="flex flex-wrap px-6 mb-6 ml-auto mr-auto">
-              <img class="ml-auto mr-auto" :src="`${filePaths.path}.png`" height="500" @error="imageLoadError" />
-          </div>
-        </div>
-        <hr>
+        <!-- <vs-table :data="users">
+          <template slot="thead">
+            <vs-th>Email</vs-th>
+            <vs-th>Name</vs-th>
+            <vs-th>Website</vs-th>
+            <vs-th>Nro</vs-th>
+          </template>
+          <template slot-scope="{data}">
+            <vs-tr :key="indextr" v-for="(tr, indextr) in data">
+              <vs-td :data="data[indextr].email">
+                {{ data[indextr].email }}
+              </vs-td>
+              <vs-td :data="data[indextr].username">
+                {{ data[indextr].name }}
+              </vs-td>
+              <vs-td :data="data[indextr].id">
+                {{ data[indextr].website }}
+              </vs-td>
+              <vs-td :data="data[indextr].id">
+                {{ data[indextr].id }}
+              </vs-td>
+            </vs-tr>
+          </template>
+        </vs-table> -->
+
         <div class="flex px-3 mt-3">
-          <div class="flex flex-wrap w-4/5 px-6 ">
-            <div class =" pr-6 ">
-              <a :href="`${filePaths.path}.DXF`" download>
-                <vs-button type="border" size="default"  @click="">DXF</vs-button>
-              </a>
-            </div>
-            <div class =" pl-2 ">
-              <a :href="`${filePaths.path}.PDF`" download>
-                <vs-button type="border" size="default"  @click="">PDF</vs-button>
-              </a>
-            </div>
-          </div>
-          <div class="flex flex-wrap w-1/5 pl-20">
+          <div class="flex flex-wrap pl-20">
             <vs-button type="border" size="default"  @click="removeTodo">Close</vs-button>
           </div>
         </div>
@@ -36,29 +43,28 @@
 <script>
 export default {
   props: {
-    displayDrawer: {
+    displayPrice: {
       type: Boolean,
       required: true
     },
-    filePaths: {
-      type: Object,
-      required: true
-    }
   },
   data () {
     return {
-      
+      users: {email: 'test@test.com', name: 'Admin', website: 'localhost', id: '1'},
     }
   },
   computed: {
     activePrompt: {
       get () {
-        return this.displayDrawer;
+        return this.displayPrice;
       },
       set (value) {
         this.$emit('hideDisplayPrompt', value)
       }
     },
+    priceData() {
+      return this.$store.state.job.priceData;
+    }
   },
   methods: {
     removeTodo () {
@@ -77,11 +83,8 @@ export default {
       event.target.height = "500";
     },
   },
+  created () {
+    console.log("safdsafdsaf");
+  }
 }
 </script>
-
-<style lang="stylus">
-.DrawerModal .con-vs-dialog .vs-dialog {
-    max-width: 50%;
-}
-</style>

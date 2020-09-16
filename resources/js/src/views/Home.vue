@@ -118,7 +118,7 @@
 						<div class="flex px-6 mb-2">
 							<div class="vx-col sm:w-1/4 w-full text_end"></div>
 							<div class="vx-col sm:w-1/2 w-full">
-								<vs-button type="relief" @click="">Price Sheet</vs-button>
+								<vs-button type="relief" @click="showPriceDialog">Price Sheet</vs-button>
 							</div>
 						</div>
 					</div>
@@ -315,6 +315,7 @@
 
 	<options-modal :displayPrompt="displayPrompt" :optionsVal = "optionsVal" @hideDisplayPrompt="hidePrompt" v-if="displayPrompt" ></options-modal>
 	<drawer-modal :displayDrawer="displayDrawer" :filePaths = "filePaths" @hideDisplayPrompt="hideDrawer" v-if="displayDrawer" ></drawer-modal>
+	<price-modal :displayPrice="displayPrice" @hideDisplayPrompt="hidePrice" v-if="displayPrice" ></price-modal>
 </div>
 
 </template>
@@ -369,17 +370,6 @@
 				},
 
 				displayPrice: false,
-				priceData: {
-					material: '',
-					style: '',
-					finish: '',
-					door: '',
-					inside: '',
-					outside: '',
-					center: '',
-					stile: '',
-					hardware: ''
-				}
 			}
 		},
 		computed: {
@@ -425,8 +415,20 @@
 			hideDrawer () {
 				this.displayDrawer = false;
 			},
-			showPriceDialog(val){
-				this.filePaths.path=val;
+			showPriceDialog(){
+				const payload = {
+					material: this.setMaterial.ID,
+					style: this.setStyle.ID,
+					finish: this.setFinish.ID,
+					door: this.setDoor.ID,
+					inside: this.drawerData.inside_code,
+					outside: this.drawerData.outside_code,
+					center: this.drawerData.centerpanel_code,
+					stile: this.drawerData.stilerail_code,
+					hardware: this.drawerData.hardware_code,
+				}
+				this.$store.dispatch('job/setPricedatas', payload);
+				console.log(payload);
 				this.displayPrice = true;
 			},
 			hidePrice () {
