@@ -313,44 +313,6 @@
 		</div>
 	</div>
 
-	<!-- Cabinet Materials -->
-	<!-- <div class="flex flex-wrap -mx-2">
-		
-		<div class="w-full md:w-1/3 px-4"> -->
-			<!-- <vs-card vs-justify="center" vs-align="center">
-				<div slot="header">
-					<span class="headText"><pre>  Did you know?</pre></span>
-				</div>
-				<div style="font-size:1em; height: 150px !important">
-					<div class="flex px-6 mb-6 item_center">
-						<span>This is my first tip.</span>
-
-					</div>
-
-				</div>
-			</vs-card>
-
-			<vs-card vs-justify="center" vs-align="center">
-				<div slot="header">
-					<span class="headText"><pre>  Explore our Gallery</pre></span>
-				</div>
-				<div style="font-size:1em">
-					<div class="flex px-6 mb-6 item_center">
-						<div class="vx-col w-full px-4">
-							<vs-image :key="index" :src="`https://picsum.photos/400/400?image=2${index}`" v-for="(image, index) in 9" />
-						</div>
-						
-					</div>
-					<div class="flex px-6 mb-6 item_center">
-						<div class="vx-col w-full px-4">
-							<h3><a href="#">Visit Door Gallery</a></h3>
-						</div>
-					</div>
-				</div>
-			</vs-card> -->
-		<!-- </div>
-	</div> -->
-	
 	<options-modal :displayPrompt="displayPrompt" :optionsVal = "optionsVal" @hideDisplayPrompt="hidePrompt" v-if="displayPrompt" ></options-modal>
 	<drawer-modal :displayDrawer="displayDrawer" :filePaths = "filePaths" @hideDisplayPrompt="hideDrawer" v-if="displayDrawer" ></drawer-modal>
 </div>
@@ -361,12 +323,14 @@
 	import vSelect from 'vue-select'
 	import OptionsModal from './modals/OptionsModal.vue'
 	import DrawerModal from './modals/DrawerModal.vue'
+	import PriceModal from './modals/PriceModal.vue'
 
 	export default{
 		components: {
 			'v-select': vSelect,
 			OptionsModal,
 			DrawerModal,
+			PriceModal
 		},
 		data(){
 			return {
@@ -402,6 +366,19 @@
 				displayDrawer: false,
 				filePaths: {
 					path: '',
+				},
+
+				displayPrice: false,
+				priceData: {
+					material: '',
+					style: '',
+					finish: '',
+					door: '',
+					inside: '',
+					outside: '',
+					center: '',
+					stile: '',
+					hardware: ''
 				}
 			}
 		},
@@ -447,6 +424,13 @@
 			},
 			hideDrawer () {
 				this.displayDrawer = false;
+			},
+			showPriceDialog(val){
+				this.filePaths.path=val;
+				this.displayPrice = true;
+			},
+			hidePrice () {
+				this.displayPrice = false;
 			},
 			initSelect () {
 				this.setStyle =  {Name: 'Select Style Group...'},
