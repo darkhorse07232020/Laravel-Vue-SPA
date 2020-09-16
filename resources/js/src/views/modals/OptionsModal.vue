@@ -11,7 +11,7 @@
       @close="init"
       :active.sync="activePrompt">
       <div>
-        <div class="mr-0 mt-0 mb-4 px-6 py-6" style="float: right; border: ridge; background-color: aliceblue;">
+        <div class="mr-0 mt-0 mb-4 px-6 py-6" style="float: right; border: ridge; ">
           <img :src="`/images/doors/${optionsVal.doorName}/Door ${optionsVal.doorName} Thumbnail ${drawerData.door_code}.png`" alt="No-Image" width = '200' @error="imageLoadError" />
         </div>
         <div>

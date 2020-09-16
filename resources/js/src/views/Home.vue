@@ -243,11 +243,10 @@
 
 					<div class="flex px-6 mb-6 item_center">
 						<div class="vx-col sm:w-1/2 w-full px-4">
-							<!-- <img :src="`/images/doors/${setDoor.Name}/Door ${setDoor.Name} Thumbnail ${drawerData.door_code}.png`" alt="No-Image" width = '100%' @error="imageLoadError" @click="showDrawerDialog(`/images/doors/${setDoor.Name}/Door ${setDoor.Name} ${drawerData.door_code}`)" /> -->
-							 <img :src="`/images/doors/${setDoor.Name}/Door ${setDoor.Name} Thumbnail ${drawerData.door_code}.png`" alt="No-Image" width = '100%' @error="imageLoadError" @click="showOptionDialog" />
+							<img :src="`/images/doors/${setDoor.Name}/Door ${setDoor.Name} Thumbnail ${drawerData.door_code}.png`" alt="No-Image" @error="imageLoadError" @click="showDrawerDialog(`/images/doors/${setDoor.Name}/Door ${setDoor.Name} ${drawerData.door_code}`)" />
 						</div>
 						<div class="vx-col sm:w-1/2 w-full px-4">
-							<img :src="`/images/inside/${drawerData.inside_code}.png`" alt="No-Image" width = '100%' @error="imageLoadError" />
+							<img :src="`/images/inside/${drawerData.inside_code}.png`" alt="No-Image" @error="imageLoadError" @click="showOptionDialog" />
 						</div>
 					</div>
 					<div class="flex px-6 mb-6 item_center">
@@ -261,10 +260,10 @@
 
 					<div class="flex px-6 mb-6 item_center">
 						<div class="vx-col sm:w-1/2 w-full px-4">
-							<img :src="`/images/drawers/${setSDrawer.Name}/Drw ${setSDrawer.Name} Thumbnail ${drawerData.door_code}.png`" alt="No-Image" width = '100%' @error="imageLoadError" @click="showDrawerDialog(`/images/drawers/${setSDrawer.Name}/Drw ${setSDrawer.Name} ${drawerData.door_code}`)" />
+							<img :src="`/images/drawers/${setSDrawer.Name}/Drw ${setSDrawer.Name} Thumbnail ${drawerData.door_code}.png`" alt="No-Image" @error="imageLoadError" @click="showDrawerDialog(`/images/drawers/${setSDrawer.Name}/Drw ${setSDrawer.Name} ${drawerData.door_code}`)" />
 						</div>
 						<div class="vx-col sm:w-1/2 w-full px-4">
-							<img :src="`/images/centerpanel/${drawerData.centerpanel_code}.png`" alt="No-Image" width = '100%' @error="imageLoadError" />
+							<img :src="`/images/centerpanel/${drawerData.centerpanel_code}.png`" alt="No-Image" @error="imageLoadError" @click="showOptionDialog" />
 						</div>
 					</div>
 					<div class="flex px-6 mb-6 item_center">
@@ -278,10 +277,10 @@
 
 					<div class="flex px-6 mb-6 item_center">
 						<div class="vx-col sm:w-1/2 w-full px-4">
-							<img :src="`/images/largedrawers/${setLDrawer.Name}/LgDrw ${setLDrawer.Name} Thumbnail ${drawerData.door_code}.png`" alt="No-Image" width = '100%' @error="imageLoadError" @click="showDrawerDialog(`/images/largedrawers/${setLDrawer.Name}/LgDrw ${setLDrawer.Name} ${drawerData.door_code}`)" />
+							<img :src="`/images/largedrawers/${setLDrawer.Name}/LgDrw ${setLDrawer.Name} Thumbnail ${drawerData.door_code}.png`" alt="No-Image" @error="imageLoadError" @click="showDrawerDialog(`/images/largedrawers/${setLDrawer.Name}/LgDrw ${setLDrawer.Name} ${drawerData.door_code}`)" />
 						</div>
 						<div class="vx-col sm:w-1/2 w-full px-4">
-							<img :src="`/images/outside/${drawerData.outside_code}.png`" alt="No-Image" width = '100%' @error="imageLoadError" />
+							<img :src="`/images/outside/${drawerData.outside_code}.png`" alt="No-Image" @error="imageLoadError" @click="showOptionDialog" />
 						</div>
 					</div>
 					<div class="flex px-6 mb-6 item_center">
@@ -295,10 +294,10 @@
 
 					<div class="flex px-6 mb-6 item_center">
 						<div class="vx-col sm:w-1/2 w-full px-4">
-							<img :src="`/images/hardware/${drawerData.hardware_code}.png`" alt="No-Image" width = '100%' @error="imageLoadError" />
+							<img :src="`/images/hardware/${drawerData.hardware_code}.png`" alt="No-Image" @error="imageLoadError" @click="showOptionDialog" />
 						</div>
 						<div class="vx-col sm:w-1/2 w-full px-4">
-							<img :src="`/images/stilerail/${drawerData.stilerail_code}.png`" alt="No-Image" width = '100%' @error="imageLoadError" />
+							<img :src="`/images/stilerail/${drawerData.stilerail_code}.png`" alt="No-Image" @error="imageLoadError" @click="showOptionDialog" />
 						</div>
 					</div>
 					<div class="flex px-6 mb-6 item_center">
@@ -449,10 +448,27 @@
 			hideDrawer () {
 				this.displayDrawer = false;
 			},
-			get_Styles_CMaterial (brand_id) {
+			initSelect () {
+				this.setStyle =  {Name: 'Select Style Group...'},
+				this.setDoor =  {Name: 'Select Door...'},
+				this.setLDrawer =  {Name: 'Select Large Drawer...'},
+				this.setSDrawer =  {Name: 'Select Small Drawer...'},
+				this.setMaterial =  {Name: 'Select Material...'},
+				this.setColor =  {Name: 'Select Color...'},
+				this.setFinish =  {Name: 'Select Finish...'},
 
+				this.setCMaterial =  {Name: 'Select Cabinet Box Material...'},
+				this.setDBox =  {Name: 'Select Drawer Box...'},
+				this.setEdge =  {Name: 'Select Edge Branding...'},
+				this.setHinges =  {Name: 'Select Hinges...'},
+				this.setFColor =  {Name: 'Select Color...'},
+				this.setFFinish =  {Name: 'Select Fin End Finish...'},
+				this.setFMaterial =  {Name: 'Select Material...'};
+			},
+			get_Styles_CMaterial (brand_id) {
+				console.log(this.radio_brand);
 				this.$vs.loading();
-				
+				this.initSelect();
 				const payload = {
 					condition: brand_id
 				};
@@ -462,7 +478,9 @@
 						this.setStyle = this.styles_cmaterial.styles[5];
 						this.setCMaterial = this.styles_cmaterial.cmaterial[0];
 						this.setDBox = this.styles_cmaterial.dbox[0];
-						
+						if(this.setStyle == undefined) {
+							this.setStyle =  {Name: 'Select Style Group...'};
+						}
 						this.getDoors(this.styles_cmaterial.styles[5]);
 						this.$vs.loading.close();
 					})
@@ -472,7 +490,6 @@
 			},
 			getDoors(value) {
 				this.$vs.loading();
-				
 				// get Door select List
 				const payload = {
 					BrandID_con: value.BrandID,
@@ -687,8 +704,9 @@
 		created () {
 			this.$vs.loading();
 			this.$store.dispatch('job/fetchImage')
-				.then(()=>{
-					
+				.then((response)=>{
+					this.radio_brand = (response.data)[0].ID;
+					this.get_Styles_CMaterial((response.data)[0].ID);
 					this.$vs.loading.close();
 				})
 				.catch(error => {
