@@ -276,7 +276,15 @@
 
 					<div class="flex px-6 mb-6 item_center">
 						<div class="vx-col sm:w-1/2 w-full px-4">
+						<template v-if = "setSDrawer.Name=='DRW'">
+							<img :src="`/images/drawers/${setDoor.Name}/Drw ${setDoor.Name} Thumbnail ${drawerData.door_code}.png`" alt="No-Image" @error="imageLoadError" @click="showDrawerDialog(`/images/drawers/${setDoor.Name}/Drw ${setDoor.Name} ${drawerData.door_code}`)" />
+						</template>
+						<template v-else-if = "setSDrawer.Name=='DRW - Slab'">
+							<img :src="`/images/drawers/${setDoor.Name}/Drw ${setDoor.Name} Thumbnail ${drawerData.door_code}.png`" alt="No-Image" @error="imageLoadError" @click="showDrawerDialog(`/images/drawers/${setDoor.Name}/Drw ${setDoor.Name} ${drawerData.door_code}`)" />
+						</template>
+						<template v-else>
 							<img :src="`/images/drawers/${setSDrawer.Name}/Drw ${setSDrawer.Name} Thumbnail ${drawerData.door_code}.png`" alt="No-Image" @error="imageLoadError" @click="showDrawerDialog(`/images/drawers/${setSDrawer.Name}/Drw ${setSDrawer.Name} ${drawerData.door_code}`)" />
+						</template>
 						</div>
 						<div class="vx-col sm:w-1/2 w-full px-4">
 							<img :src="`/images/centerpanel/${drawerData.centerpanel_code.Code}.png`" alt="No-Image" @error="imageLoadError" @click="showOptionDialog" />
@@ -293,7 +301,15 @@
 
 					<div class="flex px-6 mb-6 item_center">
 						<div class="vx-col sm:w-1/2 w-full px-4">
+						<template v-if = "setLDrawer.Name=='DRW'">
+							<img :src="`/images/largedrawers/${setDoor.Name}/LgDrw ${setDoor.Name} Thumbnail ${drawerData.door_code}.png`" alt="No-Image" @error="imageLoadError" @click="showDrawerDialog(`/images/largedrawers/${setDoor.Name}/LgDrw ${setDoor.Name} ${drawerData.door_code}`)" />
+						</template>
+						<template v-else-if = "setLDrawer.Name=='DRW - Slab'">
+							<img :src="`/images/largedrawers/${setDoor.Name}/LgDrw ${setDoor.Name} Thumbnail ${drawerData.door_code}.png`" alt="No-Image" @error="imageLoadError" @click="showDrawerDialog(`/images/largedrawers/${setDoor.Name}/LgDrw ${setDoor.Name} ${drawerData.door_code}`)" />
+						</template>
+						<template v-else>
 							<img :src="`/images/largedrawers/${setLDrawer.Name}/LgDrw ${setLDrawer.Name} Thumbnail ${drawerData.door_code}.png`" alt="No-Image" @error="imageLoadError" @click="showDrawerDialog(`/images/largedrawers/${setLDrawer.Name}/LgDrw ${setLDrawer.Name} ${drawerData.door_code}`)" />
+						</template>
 						</div>
 						<div class="vx-col sm:w-1/2 w-full px-4">
 							<img :src="`/images/outside/${drawerData.outside_code.Code}.png`" alt="No-Image" @error="imageLoadError" @click="showOptionDialog" />
@@ -419,8 +435,8 @@
 			}
 		},
 		methods: {
-			// getShow(a, b){
-			// 	console.log(a + " " + b);
+			// getShow(a){
+			// 	console.log(a);
 			// },
 			showOptionDialog(){
 				this.displayPrompt = true;
