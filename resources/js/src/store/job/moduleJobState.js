@@ -9,5 +9,4 @@ export default {
   edges: [],
   profiles: [],
   drawerData: [],
-  priceData: [],
 }

@@ -41,17 +41,14 @@ class JobController extends Controller
         $cond = $request -> condition;
         $data1 = Style_group::where('BrandID', $cond)
             ->orderBy('ListOrder')
-            ->select("Name", "ID", "BrandID", "SpecDefault")
             ->get()->toArray();
         
         $data2 = Cabinet_Material::where('BrandID', $cond)
             ->orderBy('Name')
-            ->select("Name", "ID", "BrandID")
             ->get()->toArray();
 
         $data3 = Cabinet_Drwbox::where('BrandID', $cond)
             ->orderBy('Name')
-            ->select("Name", "ID", "BrandID")
             ->get()->toArray();
         
         $data=['styles' => $data1, 'cmaterial' => $data2, 'dbox' => $data3];
@@ -87,21 +84,18 @@ class JobController extends Controller
 
         foreach ($drawerstyle as $cond) {
             $tmp = Style::where('ID', $cond)
-                ->select("Name", "ID")
                 ->first()->toArray();
             array_push($data1, $tmp);
         }
 
         foreach ($lgdrawerstyle as $cond) {
             $tmp = Style::where('ID', $cond)
-                ->select("Name", "ID")
                 ->first()->toArray();
             array_push($data2, $tmp);
         }
 
         foreach ($materials as $cond) {
             $tmp = Style_Material::where('ID', $cond)
-                ->select("Name", "ID", "ColorID")
                 ->first()->toArray();
             array_push($data3, $tmp);
         }
@@ -119,7 +113,6 @@ class JobController extends Controller
 
         foreach ($colors as $cond) {
             $tmp = Style_Color::where('ID', $cond)
-                ->select("Name", "ID", "FinishID", "image", "EdgeBandingDefaultID")
                 ->first()->toArray();
             array_push($data, $tmp);
         }
@@ -134,7 +127,6 @@ class JobController extends Controller
         $data = array();
         foreach ($finish as $cond) {
             $tmp = Style_Finish::where('ID', $cond)
-                ->select("Name", "ID")
                 ->first()->toArray();
             array_push($data, $tmp);
         }
@@ -149,7 +141,6 @@ class JobController extends Controller
         $data = Edge_banding::join('edge_banding_wood', 'edge_banding.ID', '=', 'edge_banding_wood.EdgeBandingID')
             ->where('edge_banding_wood.MaterialID', $material_id)
             ->where('edge_banding_wood.ColorID', $color_id)
-            ->select('Name', 'ID')
             ->get()->toArray();
 
         $hinges = Cabinet_hinge::find(1)->get()->toArray();
@@ -167,7 +158,6 @@ class JobController extends Controller
         $data1 = array();
         foreach ($inside as $cond) {
             $tmp = Style_Insideprofile::where('ID', $cond)
-                ->select("Name", "Code", "ID")
                 ->first();
             if($tmp) {
                 array_push($data1, $tmp->toArray());
@@ -178,7 +168,6 @@ class JobController extends Controller
         $data2 = array();
         foreach ($outside as $cond) {
             $tmp = Style_Outsideprofile::where('ID', $cond)
-                ->select("Name", "Code", "ID")
                 ->first();
             if($tmp) {
                 array_push($data2, $tmp->toArray());
@@ -189,7 +178,6 @@ class JobController extends Controller
         $data3 = array();
         foreach ($centerpanel as $cond) {
             $tmp = Style_Centerpanel::where('ID', $cond)
-                ->select("Name", "Code", "ID")
                 ->first();
             if($tmp) {
                 array_push($data3, $tmp->toArray());
@@ -200,7 +188,6 @@ class JobController extends Controller
         $data4 = array();
         foreach ($stilerail as $cond) {
             $tmp = Style_Stilerail::where('ID', $cond)
-                ->select("Name", "Code", "ID")
                 ->first();
             if($tmp) {
                 array_push($data4, $tmp->toArray());
@@ -211,7 +198,6 @@ class JobController extends Controller
         $data5 = array();
         foreach ($hardware as $cond) {
             $tmp = Style_Hardware::where('ID', $cond)
-                ->select("Name", "Code", "ID")
                 ->first();
             if($tmp) {
                 array_push($data5, $tmp->toArray());

@@ -38,8 +38,5 @@ export default {
   UPDATE_DRAWERDATAS (state, drawerData) {
     state.drawerData = drawerData;
   },
-  UPDATE_PRICEDATAS (state, priceData) {
-    state.priceData = priceData;
-  },
 }
 

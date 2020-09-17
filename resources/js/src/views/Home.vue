@@ -246,7 +246,7 @@
 							<img :src="`/images/doors/${setDoor.Name}/Door ${setDoor.Name} Thumbnail ${drawerData.door_code}.png`" alt="No-Image" @error="imageLoadError" @click="showDrawerDialog(`/images/doors/${setDoor.Name}/Door ${setDoor.Name} ${drawerData.door_code}`)" />
 						</div>
 						<div class="vx-col sm:w-1/2 w-full px-4">
-							<img :src="`/images/inside/${drawerData.inside_code}.png`" alt="No-Image" @error="imageLoadError" @click="showOptionDialog" />
+							<img :src="`/images/inside/${drawerData.inside_code.Code}.png`" alt="No-Image" @error="imageLoadError" @click="showOptionDialog" />
 						</div>
 					</div>
 					<div class="flex px-6 mb-6 item_center">
@@ -263,7 +263,7 @@
 							<img :src="`/images/drawers/${setSDrawer.Name}/Drw ${setSDrawer.Name} Thumbnail ${drawerData.door_code}.png`" alt="No-Image" @error="imageLoadError" @click="showDrawerDialog(`/images/drawers/${setSDrawer.Name}/Drw ${setSDrawer.Name} ${drawerData.door_code}`)" />
 						</div>
 						<div class="vx-col sm:w-1/2 w-full px-4">
-							<img :src="`/images/centerpanel/${drawerData.centerpanel_code}.png`" alt="No-Image" @error="imageLoadError" @click="showOptionDialog" />
+							<!-- <img :src="`/images/centerpanel/${drawerData.centerpanel_code.Code}.png`" alt="No-Image" @error="imageLoadError" @click="showOptionDialog" /> -->
 						</div>
 					</div>
 					<div class="flex px-6 mb-6 item_center">
@@ -279,9 +279,9 @@
 						<div class="vx-col sm:w-1/2 w-full px-4">
 							<img :src="`/images/largedrawers/${setLDrawer.Name}/LgDrw ${setLDrawer.Name} Thumbnail ${drawerData.door_code}.png`" alt="No-Image" @error="imageLoadError" @click="showDrawerDialog(`/images/largedrawers/${setLDrawer.Name}/LgDrw ${setLDrawer.Name} ${drawerData.door_code}`)" />
 						</div>
-						<div class="vx-col sm:w-1/2 w-full px-4">
-							<img :src="`/images/outside/${drawerData.outside_code}.png`" alt="No-Image" @error="imageLoadError" @click="showOptionDialog" />
-						</div>
+						<!-- <div class="vx-col sm:w-1/2 w-full px-4">
+							<img :src="`/images/outside/${drawerData.outside_code.Code}.png`" alt="No-Image" @error="imageLoadError" @click="showOptionDialog" />
+						</div> -->
 					</div>
 					<div class="flex px-6 mb-6 item_center">
 						<div class="vx-col sm:w-1/2 w-full px-4">
@@ -293,12 +293,12 @@
 					</div>
 
 					<div class="flex px-6 mb-6 item_center">
-						<div class="vx-col sm:w-1/2 w-full px-4">
-							<img :src="`/images/hardware/${drawerData.hardware_code}.png`" alt="No-Image" @error="imageLoadError" @click="showOptionDialog" />
-						</div>
-						<div class="vx-col sm:w-1/2 w-full px-4">
-							<img :src="`/images/stilerail/${drawerData.stilerail_code}.png`" alt="No-Image" @error="imageLoadError" @click="showOptionDialog" />
-						</div>
+						<!-- <div class="vx-col sm:w-1/2 w-full px-4">
+							<img :src="`/images/hardware/${drawerData.hardware_code.Code}.png`" alt="No-Image" @error="imageLoadError" @click="showOptionDialog" />
+						</div> -->
+						<!-- <div class="vx-col sm:w-1/2 w-full px-4">
+							<img :src="`/images/stilerail/${drawerData.stilerail_code.Code}.png`" alt="No-Image" @error="imageLoadError" @click="showOptionDialog" />
+						</div> -->
 					</div>
 					<div class="flex px-6 mb-6 item_center">
 						<div class="vx-col sm:w-1/2 w-full px-4">
@@ -370,6 +370,7 @@
 				},
 
 				displayPrice: false,
+				priceData: [],
 			}
 		},
 		computed: {
@@ -416,19 +417,178 @@
 				this.displayDrawer = false;
 			},
 			showPriceDialog(){
-				const payload = {
-					material: this.setMaterial.ID,
-					style: this.setStyle.ID,
-					finish: this.setFinish.ID,
-					door: this.setDoor.ID,
-					inside: this.drawerData.inside_code,
-					outside: this.drawerData.outside_code,
-					center: this.drawerData.centerpanel_code,
-					stile: this.drawerData.stilerail_code,
-					hardware: this.drawerData.hardware_code,
-				}
-				this.$store.dispatch('job/setPricedatas', payload);
-				console.log(payload);
+				this.priceData = [{
+					'Door' : {
+						'Name' : this.setDoor.Name,
+					'Cols' : {
+						'Door' : this.setDoor.DoorCost,
+						'Tall' : this.setDoor.TallDoorCost,
+						'Full' : this.setDoor.FullTallDoorCost,			
+						'Drw' : this.setDoor.DrawerCost,			
+						'LgDrw' : this.setDoor.LargeDrawerCost,			
+						'Over' : this.setDoor.OverlayCost,
+						'DrSQ' : this.setDoor.DoorSqFtCost,
+						'DrwSQ' : this.setDoor.DrawerSqftCost,
+						'WallE' : this.setDoor.WallEndCost,
+						'BaseE' : this.setDoor.BaseEndCost,
+						'TallE' : this.setDoor.TallEndCost,
+						'FinInts' : this.setDoor.FinishedInteriorCost,
+						'P1sq' : this.setDoor.Panel1SSqFtCost,
+						'P2sq' : this.setDoor.Panel2SSqFtCost,
+					}}
+				}, {
+					'Inside Profile' : {
+						'Name' : this.drawerData.inside_code.Name,
+					'Cols' : {
+						'Door' : this.drawerData.inside_code.DoorCost,
+						'Tall' : this.drawerData.inside_code.TallDoorCost,
+						'Full' : this.drawerData.inside_code.FullTallDoorCost,
+						'Drw' : this.drawerData.inside_code.DrawerCost,			
+						'LgDrw' : this.drawerData.inside_code.LargeDrawerCost,
+						'Over' : this.drawerData.inside_code.OverlayCost,
+						'DrSQ' : this.drawerData.inside_code.DoorSqFtCost,
+						'DrwSQ' : this.drawerData.inside_code.DrawerSqftCost,
+						'WallE' : this.drawerData.inside_code.WallEndCost,
+						'BaseE' : this.drawerData.inside_code.BaseEndCost,
+						'TallE' : this.drawerData.inside_code.TallEndCost,
+						'FinInts' : this.drawerData.inside_code.FinishedInteriorCost,
+						'P1sq' : this.drawerData.inside_code.Panel1SSqFtCost,
+						'P2sq' : this.drawerData.inside_code.Panel2SSqFtCost,
+					}}
+				}, {
+					'Center Panel' : {
+						'Name' : this.drawerData.centerpanel_code.Name,
+					'Cols' : {
+						'Door' : this.drawerData.centerpanel_code.DoorCost,
+						'Tall' : this.drawerData.centerpanel_code.TallDoorCost,
+						'Full' : this.drawerData.centerpanel_code.FullTallDoorCost,
+						'Drw' : this.drawerData.centerpanel_code.DrawerCost,			
+						'LgDrw' : this.drawerData.centerpanel_code.LargeDrawerCost,
+						'Over' : this.drawerData.centerpanel_code.OverlayCost,
+						'DrSQ' : this.drawerData.centerpanel_code.DoorSqFtCost,
+						'DrwSQ' : this.drawerData.centerpanel_code.DrawerSqftCost,
+						'WallE' : this.drawerData.centerpanel_code.WallEndCost,
+						'BaseE' : this.drawerData.centerpanel_code.BaseEndCost,
+						'TallE' : this.drawerData.centerpanel_code.TallEndCost,
+						'FinInts' : this.drawerData.centerpanel_code.FinishedInteriorCost,
+						'P1sq' : this.drawerData.centerpanel_code.Panel1SSqFtCost,
+						'P2sq' : this.drawerData.centerpanel_code.Panel2SSqFtCost,
+					}}
+				}, {
+					'Outside Profile' : {
+						'Name' : this.drawerData.outside_code.Name,
+					'Cols' : {
+						'Door' : this.drawerData.outside_code.DoorCost,
+						'Tall' : this.drawerData.outside_code.TallDoorCost,
+						'Full' : this.drawerData.outside_code.FullTallDoorCost,
+						'Drw' : this.drawerData.outside_code.DrawerCost,			
+						'LgDrw' : this.drawerData.outside_code.LargeDrawerCost,
+						'Over' : this.drawerData.outside_code.OverlayCost,
+						'DrSQ' : this.drawerData.outside_code.DoorSqFtCost,
+						'DrwSQ' : this.drawerData.outside_code.DrawerSqftCost,
+						'WallE' : this.drawerData.outside_code.WallEndCost,
+						'BaseE' : this.drawerData.outside_code.BaseEndCost,
+						'TallE' : this.drawerData.outside_code.TallEndCost,
+						'FinInts' : this.drawerData.outside_code.FinishedInteriorCost,
+						'P1sq' : this.drawerData.outside_code.Panel1SSqFtCost,
+						'P2sq' : this.drawerData.outside_code.Panel2SSqFtCost,
+					}}
+				}, {
+					'Stile Rail' : {
+						'Name' : this.drawerData.stilerail_code.Name,
+					'Cols' : {
+						'Door' : this.drawerData.stilerail_code.DoorCost,
+						'Tall' : this.drawerData.stilerail_code.TallDoorCost,
+						'Full' : this.drawerData.stilerail_code.FullTallDoorCost,
+						'Drw' : this.drawerData.stilerail_code.DrawerCost,			
+						'LgDrw' : this.drawerData.stilerail_code.LargeDrawerCost,
+						'Over' : this.drawerData.stilerail_code.OverlayCost,
+						'DrSQ' : this.drawerData.stilerail_code.DoorSqFtCost,
+						'DrwSQ' : this.drawerData.stilerail_code.DrawerSqftCost,
+						'WallE' : this.drawerData.stilerail_code.WallEndCost,
+						'BaseE' : this.drawerData.stilerail_code.BaseEndCost,
+						'TallE' : this.drawerData.stilerail_code.TallEndCost,
+						'FinInts' : this.drawerData.stilerail_code.FinishedInteriorCost,
+						'P1sq' : this.drawerData.stilerail_code.Panel1SSqFtCost,
+						'P2sq' : this.drawerData.stilerail_code.Panel2SSqFtCost,
+					}}
+				}, {
+					'Hardware' : {
+						'Name' : this.drawerData.hardware_code.Name,
+					'Cols' : {
+						'Door' : this.drawerData.hardware_code.DoorCost,
+						'Tall' : this.drawerData.hardware_code.TallDoorCost,
+						'Full' : this.drawerData.hardware_code.FullTallDoorCost,
+						'Drw' : this.drawerData.hardware_code.DrawerCost,
+						'LgDrw' : this.drawerData.hardware_code.LargeDrawerCost,
+						'Over' : this.drawerData.hardware_code.OverlayCost,
+						'DrSQ' : this.drawerData.hardware_code.DoorSqFtCost,
+						'DrwSQ' : this.drawerData.hardware_code.DrawerSqftCost,
+						'WallE' : this.drawerData.hardware_code.WallEndCost,
+						'BaseE' : this.drawerData.hardware_code.BaseEndCost,
+						'TallE' : this.drawerData.hardware_code.TallEndCost,
+						'FinInts' : this.drawerData.hardware_code.FinishedInteriorCost,
+						'P1sq' : this.drawerData.hardware_code.Panel1SSqFtCost,
+						'P2sq' : this.drawerData.hardware_code.Panel2SSqFtCost,
+					}}
+				}, {
+					'Material' : {
+						'Name' : this.setMaterial.Name,
+					'Cols' : {
+						'Door' : this.setMaterial.DoorCost,
+						'Tall' : this.setMaterial.TallDoorCost,
+						'Full' : this.setMaterial.FullTallDoorCost,			
+						'Drw' : this.setMaterial.DrawerCost,			
+						'LgDrw' : this.setMaterial.LargeDrawerCost,			
+						'Over' : this.setMaterial.OverlayCost,
+						'DrSQ' : this.setMaterial.DoorSqFtCost,
+						'DrwSQ' : this.setMaterial.DrawerSqftCost,
+						'WallE' : this.setMaterial.WallEndCost,
+						'BaseE' : this.setMaterial.BaseEndCost,
+						'TallE' : this.setMaterial.TallEndCost,
+						'FinInts' : this.setMaterial.FinishedInteriorCost,
+						'P1sq' : this.setMaterial.Panel1SSqFtCost,
+						'P2sq' : this.setMaterial.Panel2SSqFtCost,
+					}}
+				}, {
+					'Color' : {
+						'Name' : this.setColor.Name,
+					'Cols' : {
+						'Door' : this.setColor.DoorCost,
+						'Tall' : this.setColor.TallDoorCost,
+						'Full' : this.setColor.FullTallDoorCost,			
+						'Drw' : this.setColor.DrawerCost,			
+						'LgDrw' : this.setColor.LargeDrawerCost,			
+						'Over' : this.setColor.OverlayCost,
+						'DrSQ' : this.setColor.DoorSqFtCost,
+						'DrwSQ' : this.setColor.DrawerSqftCost,
+						'WallE' : this.setColor.WallEndCost,
+						'BaseE' : this.setColor.BaseEndCost,
+						'TallE' : this.setColor.TallEndCost,
+						'FinInts' : this.setColor.FinishedInteriorCost,
+						'P1sq' : this.setColor.Panel1SSqFtCost,
+						'P2sq' : this.setColor.Panel2SSqFtCost,
+					}}
+				}, {
+					'Finish' : {
+						'Name' : this.setFinish.Name,
+					'Cols' : {
+						'Door' : this.setFinish.DoorCost,
+						'Tall' : this.setFinish.TallDoorCost,
+						'Full' : this.setFinish.FullTallDoorCost,			
+						'Drw' : this.setFinish.DrawerCost,			
+						'LgDrw' : this.setFinish.LargeDrawerCost,			
+						'Over' : this.setFinish.OverlayCost,
+						'DrSQ' : this.setFinish.DoorSqFtCost,
+						'DrwSQ' : this.setFinish.DrawerSqftCost,
+						'WallE' : this.setFinish.WallEndCost,
+						'BaseE' : this.setFinish.BaseEndCost,
+						'TallE' : this.setFinish.TallEndCost,
+						'FinInts' : this.setFinish.FinishedInteriorCost,
+						'P1sq' : this.setFinish.Panel1SSqFtCost,
+						'P2sq' : this.setFinish.Panel2SSqFtCost,
+					}}
+				}];
 				this.displayPrice = true;
 			},
 			hidePrice () {
@@ -452,7 +612,7 @@
 				this.setFMaterial =  {Name: 'Select Material...'};
 			},
 			get_Styles_CMaterial (brand_id) {
-				console.log(this.radio_brand);
+
 				this.$vs.loading();
 				this.initSelect();
 				const payload = {
@@ -461,6 +621,7 @@
 				
 				this.$store.dispatch('job/fetchStyle', payload)
 					.then((response) => {
+
 						this.setStyle = this.styles_cmaterial.styles[5];
 						this.setCMaterial = this.styles_cmaterial.cmaterial[0];
 						this.setDBox = this.styles_cmaterial.dbox[0];
@@ -469,10 +630,12 @@
 						}
 						this.getDoors(this.styles_cmaterial.styles[5]);
 						this.$vs.loading.close();
+
 					})
 					.catch( error => {
 						this.$vs.loading.close()
-					})
+					});
+
 			},
 			getDoors(value) {
 				this.$vs.loading();
@@ -630,53 +793,54 @@
 					hardware: this.setDoor.DefaultHardware,
 				}
 				this.$vs.loading();
-				var inside_radio = '', outside_radio = '', centerpanel_radio = '', hardware_radio = '', stilerail_radio = '';
+				console.log('start init modal');
+				var inside_radio = {Code: ''}, outside_radio = {Code: ''}, centerpanel_radio = {Code: ''}, hardware_radio = {Code: ''}, stilerail_radio = {Code: ''};
 				this.$store.dispatch('job/fetchProfiles', payload)
 					.then(()=>{
 						this.optionsVal.doorName=this.setDoor.Name;
 						if(defaultVal.inside && this.profiles.insides.length) {
 							this.optionsVal.inside = this.profiles.insides.find(element => element.ID == defaultVal.inside);
 							
-							inside_radio = this.optionsVal.inside.Code;
+							inside_radio = this.optionsVal.inside;
 						}
 
 						if(defaultVal.centerpanel && this.profiles.centerpanels.length) {
 							this.optionsVal.centerpanel = this.profiles.centerpanels.find(element => element.ID == defaultVal.centerpanel);
-							centerpanel_radio = this.optionsVal.centerpanel.Code;
+							centerpanel_radio = this.optionsVal.centerpanel;
 						}
 
 						if(defaultVal.outside  && this.profiles.outsides.length) {
 
 							this.optionsVal.outside = this.profiles.outsides.find(element => element.ID == defaultVal.outside);
-							outside_radio = this.optionsVal.outside.Code;
+							outside_radio = this.optionsVal.outside;
 						}
 
 						if(defaultVal.stile && this.profiles.stilerails.length) {
 							this.optionsVal.stile = this.profiles.stilerails.find(element => element.ID == defaultVal.stile);
-							stilerail_radio = this.optionsVal.stile.Code;
+							stilerail_radio = this.optionsVal.stile;
 						}
 
 						if(defaultVal.hardware && this.profiles.hardwares.length) {
 							this.optionsVal.hardware = this.profiles.hardwares.find(element => element.ID == defaultVal.hardware);
-							hardware_radio = this.optionsVal.hardware.Code;
+							hardware_radio = this.optionsVal.hardware;
 						}
-
 						var tmp='';
-						tmp += (inside_radio ? inside_radio + ' ' : '');
-						tmp += (stilerail_radio ? stilerail_radio + ' ' : '');
-						tmp += (centerpanel_radio ? centerpanel_radio + ' ' : '');
-						tmp += (outside_radio ? outside_radio : '');
+						tmp += (inside_radio.Code ? inside_radio.Code + ' ' : '');
+						tmp += (stilerail_radio.Code ? stilerail_radio.Code + ' ' : '');
+						tmp += (centerpanel_radio.Code ? centerpanel_radio.Code + ' ' : '');
+						tmp += (outside_radio.Code ? outside_radio.Code : '');
 
 						const payload1 = {
 							door_code: tmp,
 							inside_code: inside_radio,
-							centerpanel_code: centerpanel_radio,
+							centerpanel_code: centerpanel_radio ,
 							outside_code: outside_radio,
-							hardware_code: hardware_radio,
-							stilerail_code: stilerail_radio,
+							hardware_code: hardware_radio ,
+							stilerail_code: stilerail_radio ,
 						};
-						this.$store.dispatch('job/setDrawerdatas', payload1);
-	  
+						console.log('payload1', payload1);
+						this.$store.dispatch('job/setDrawerdatas', payload1)
+						console.log('store', this.drawerData);
 						this.$vs.loading.close();
 					})
 					.catch(error => {

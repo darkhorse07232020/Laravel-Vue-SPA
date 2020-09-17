@@ -158,9 +158,5 @@ export default {
 
   setDrawerdatas ({ commit }, payload) {
     commit('UPDATE_DRAWERDATAS', payload);
-  },
-
-  setPricedatas ({ commit }, payload) {
-    commit('UPDATE_PRICEDATAS', payload);
   }
 }

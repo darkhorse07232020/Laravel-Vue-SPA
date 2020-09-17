@@ -6,7 +6,7 @@
       button-cancel = "border"
       :buttons-hidden = true
       :active.sync="activePrompt">
-        <!-- <vs-table :data="users">
+        <vs-table :data="users">
           <template slot="thead">
             <vs-th>Email</vs-th>
             <vs-th>Name</vs-th>
@@ -29,7 +29,7 @@
               </vs-td>
             </vs-tr>
           </template>
-        </vs-table> -->
+        </vs-table>
 
         <div class="flex px-3 mt-3">
           <div class="flex flex-wrap pl-20">
@@ -47,10 +47,14 @@ export default {
       type: Boolean,
       required: true
     },
+    priceData: {
+      type: Array,
+      required: true
+    }
   },
   data () {
     return {
-      users: {email: 'test@test.com', name: 'Admin', website: 'localhost', id: '1'},
+      users: [{email: 'test@test.com', name: 'Admin', website: 'localhost', id: '1'}],
     }
   },
   computed: {
@@ -84,7 +88,6 @@ export default {
     },
   },
   created () {
-    console.log("safdsafdsaf");
   }
 }
 </script>
