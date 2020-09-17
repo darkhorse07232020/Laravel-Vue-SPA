@@ -6,27 +6,42 @@
       button-cancel = "border"
       :buttons-hidden = true
       :active.sync="activePrompt">
-        <vs-table :data="users">
+        <vs-table :data="priceData">
           <template slot="thead">
-            <vs-th>Email</vs-th>
-            <vs-th>Name</vs-th>
-            <vs-th>Website</vs-th>
-            <vs-th>Nro</vs-th>
+            <vs-th></vs-th>
+            <vs-th>Door</vs-th>
+            <vs-th>Tall</vs-th>
+            <vs-th>Full</vs-th>
+            <vs-th>Drw</vs-th>
+            <vs-th>LgDrw</vs-th>
+            <vs-th>Over</vs-th>
+            <vs-th>DrSQ</vs-th>
+            <vs-th>DrwSQ</vs-th>
+            <vs-th>WallE</vs-th>
+            <vs-th>BaseE</vs-th>
+            <vs-th>TallE</vs-th>
+            <vs-th>FinInts</vs-th>
+            <vs-th>P1sq</vs-th>
+            <vs-th>P2sq</vs-th>
           </template>
           <template slot-scope="{data}">
             <vs-tr :key="indextr" v-for="(tr, indextr) in data">
-              <vs-td :data="data[indextr].email">
-                {{ data[indextr].email }}
-              </vs-td>
-              <vs-td :data="data[indextr].username">
-                {{ data[indextr].name }}
-              </vs-td>
-              <vs-td :data="data[indextr].id">
-                {{ data[indextr].website }}
-              </vs-td>
-              <vs-td :data="data[indextr].id">
-                {{ data[indextr].id }}
-              </vs-td>
+              <template v-if = "tr.Name.Value">
+                <vs-td :data="tr.Name.Value">
+                  {{tr.Name.Keyword}}: {{ tr.Name.Value }}
+                </vs-td>
+                <vs-td :key="indextd" v-for="(td, indextd) in tr.Cols">
+                  {{ td }}
+                </vs-td>
+              </template>
+              <template v-else>
+                <vs-td :data="tr.Name.Value">
+                  {{tr.Name.Keyword}}: None
+                </vs-td>
+                <vs-td :key="indextd" v-for="indextd in 14">
+                  0.00
+                </vs-td>
+              </template>
             </vs-tr>
           </template>
         </vs-table>
@@ -41,6 +56,7 @@
 </template>
 
 <script>
+import LogoVue from '../../layouts/components/Logo.vue';
 export default {
   props: {
     displayPrice: {
@@ -54,7 +70,6 @@ export default {
   },
   data () {
     return {
-      users: [{email: 'test@test.com', name: 'Admin', website: 'localhost', id: '1'}],
     }
   },
   computed: {
@@ -66,9 +81,6 @@ export default {
         this.$emit('hideDisplayPrompt', value)
       }
     },
-    priceData() {
-      return this.$store.state.job.priceData;
-    }
   },
   methods: {
     removeTodo () {
@@ -80,11 +92,6 @@ export default {
     },
     submitTodo () {
       this.$emit('hideDisplayPrompt')
-
-    },
-    imageLoadError(event) {
-      event.target.src = "/images/1x1.png";
-      event.target.height = "500";
     },
   },
   created () {

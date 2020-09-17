@@ -73,7 +73,15 @@
 							<div class="vx-col sm:w-1/2 w-full">
 								<v-select label="Name" v-model="setMaterial" :options="materials.Material" @input="getColor" >
 									<template slot="option" slot-scope="option">
-										<img :src="`/images/finish/${option.Name}.jpg`" width='40' @error="imageLoadError" />
+										<template v-if = "option.Name=='*Special - V'">
+											<img :src="`/images/finish/Special - V.jpg`" width='40' @error="imageLoadError" />
+										</template>
+										<template v-else-if = "option.Name=='*Special - S'">
+											<img :src="`/images/finish/Special - S.jpg`" width='40' @error="imageLoadError" />
+										</template>
+										<template v-else>
+											<img :src="`/images/finish/${option.Name}.jpg`" width='40' @error="imageLoadError" />
+										</template>
 										{{ option.Name }}
 									</template>
 								</v-select>
@@ -88,7 +96,16 @@
 							<div class="vx-col sm:w-1/2 w-full">
 								<v-select label="Name" v-model="setColor" :options="colors" @input="getFinish" >
 									<template slot="option" slot-scope="option">
-										<img :src="`/images/finish/${materials.Material.Name} ${option.Name}.jpg`" width='40' @error="imageLoadError" />
+										<!-- {{getShow(setMaterial.Name, option.Name)}} -->
+										<template v-if = "setMaterial.Name=='*Special - V'">
+											<img :src="`/images/finish/Special - V ${option.Name}.jpg`" width='40' @error="imageLoadError" />
+										</template>
+										<template v-else-if = "setMaterial.Name=='*Special - S'">
+											<img :src="`/images/finish/Special - S ${option.Name}.jpg`" width='40' @error="imageLoadError" />
+										</template>
+										<template v-else>
+											<img :src="`/images/finish/${setMaterial.Name} ${option.Name}.jpg`" width='40' @error="imageLoadError" />
+										</template>
 										{{ option.Name }}
 									</template>
 								</v-select>
@@ -240,7 +257,6 @@
 				</div>
 
 				<div style="font-size:1em">
-
 					<div class="flex px-6 mb-6 item_center">
 						<div class="vx-col sm:w-1/2 w-full px-4">
 							<img :src="`/images/doors/${setDoor.Name}/Door ${setDoor.Name} Thumbnail ${drawerData.door_code}.png`" alt="No-Image" @error="imageLoadError" @click="showDrawerDialog(`/images/doors/${setDoor.Name}/Door ${setDoor.Name} ${drawerData.door_code}`)" />
@@ -263,7 +279,7 @@
 							<img :src="`/images/drawers/${setSDrawer.Name}/Drw ${setSDrawer.Name} Thumbnail ${drawerData.door_code}.png`" alt="No-Image" @error="imageLoadError" @click="showDrawerDialog(`/images/drawers/${setSDrawer.Name}/Drw ${setSDrawer.Name} ${drawerData.door_code}`)" />
 						</div>
 						<div class="vx-col sm:w-1/2 w-full px-4">
-							<!-- <img :src="`/images/centerpanel/${drawerData.centerpanel_code.Code}.png`" alt="No-Image" @error="imageLoadError" @click="showOptionDialog" /> -->
+							<img :src="`/images/centerpanel/${drawerData.centerpanel_code.Code}.png`" alt="No-Image" @error="imageLoadError" @click="showOptionDialog" />
 						</div>
 					</div>
 					<div class="flex px-6 mb-6 item_center">
@@ -279,9 +295,9 @@
 						<div class="vx-col sm:w-1/2 w-full px-4">
 							<img :src="`/images/largedrawers/${setLDrawer.Name}/LgDrw ${setLDrawer.Name} Thumbnail ${drawerData.door_code}.png`" alt="No-Image" @error="imageLoadError" @click="showDrawerDialog(`/images/largedrawers/${setLDrawer.Name}/LgDrw ${setLDrawer.Name} ${drawerData.door_code}`)" />
 						</div>
-						<!-- <div class="vx-col sm:w-1/2 w-full px-4">
+						<div class="vx-col sm:w-1/2 w-full px-4">
 							<img :src="`/images/outside/${drawerData.outside_code.Code}.png`" alt="No-Image" @error="imageLoadError" @click="showOptionDialog" />
-						</div> -->
+						</div>
 					</div>
 					<div class="flex px-6 mb-6 item_center">
 						<div class="vx-col sm:w-1/2 w-full px-4">
@@ -293,12 +309,12 @@
 					</div>
 
 					<div class="flex px-6 mb-6 item_center">
-						<!-- <div class="vx-col sm:w-1/2 w-full px-4">
+						<div class="vx-col sm:w-1/2 w-full px-4">
 							<img :src="`/images/hardware/${drawerData.hardware_code.Code}.png`" alt="No-Image" @error="imageLoadError" @click="showOptionDialog" />
-						</div> -->
-						<!-- <div class="vx-col sm:w-1/2 w-full px-4">
+						</div> 
+						<div class="vx-col sm:w-1/2 w-full px-4">
 							<img :src="`/images/stilerail/${drawerData.stilerail_code.Code}.png`" alt="No-Image" @error="imageLoadError" @click="showOptionDialog" />
-						</div> -->
+						</div>
 					</div>
 					<div class="flex px-6 mb-6 item_center">
 						<div class="vx-col sm:w-1/2 w-full px-4">
@@ -315,7 +331,7 @@
 
 	<options-modal :displayPrompt="displayPrompt" :optionsVal = "optionsVal" @hideDisplayPrompt="hidePrompt" v-if="displayPrompt" ></options-modal>
 	<drawer-modal :displayDrawer="displayDrawer" :filePaths = "filePaths" @hideDisplayPrompt="hideDrawer" v-if="displayDrawer" ></drawer-modal>
-	<price-modal :displayPrice="displayPrice" @hideDisplayPrompt="hidePrice" v-if="displayPrice" ></price-modal>
+	<price-modal :displayPrice="displayPrice" :priceData="priceData" @hideDisplayPrompt="hidePrice" v-if="displayPrice" ></price-modal>
 </div>
 
 </template>
@@ -357,11 +373,11 @@
 				
 				optionsVal: {
 					doorName: '',
-					inside: '',
-					outside: '',
-					centerpanel: '',
-					stile: '',
-					hardware: '',
+					inside: {Code: ''},
+					outside: {Code: ''},
+					centerpanel: {Code: ''},
+					stile: {Code: ''},
+					hardware: {Code: ''},
 				},
 
 				displayDrawer: false,
@@ -403,6 +419,9 @@
 			}
 		},
 		methods: {
+			// getShow(a, b){
+			// 	console.log(a + " " + b);
+			// },
 			showOptionDialog(){
 				this.displayPrompt = true;
 			},
@@ -418,8 +437,10 @@
 			},
 			showPriceDialog(){
 				this.priceData = [{
-					'Door' : {
-						'Name' : this.setDoor.Name,
+					'Name' : {
+						'Keyword': 'Door',
+						'Value': this.setDoor.Name
+					},
 					'Cols' : {
 						'Door' : this.setDoor.DoorCost,
 						'Tall' : this.setDoor.TallDoorCost,
@@ -435,10 +456,12 @@
 						'FinInts' : this.setDoor.FinishedInteriorCost,
 						'P1sq' : this.setDoor.Panel1SSqFtCost,
 						'P2sq' : this.setDoor.Panel2SSqFtCost,
-					}}
+					}
 				}, {
-					'Inside Profile' : {
-						'Name' : this.drawerData.inside_code.Name,
+					'Name' : {
+						'Keyword': 'Inside Profile',
+						'Value': this.drawerData.inside_code.Name,
+					},
 					'Cols' : {
 						'Door' : this.drawerData.inside_code.DoorCost,
 						'Tall' : this.drawerData.inside_code.TallDoorCost,
@@ -454,10 +477,12 @@
 						'FinInts' : this.drawerData.inside_code.FinishedInteriorCost,
 						'P1sq' : this.drawerData.inside_code.Panel1SSqFtCost,
 						'P2sq' : this.drawerData.inside_code.Panel2SSqFtCost,
-					}}
+					}
 				}, {
-					'Center Panel' : {
-						'Name' : this.drawerData.centerpanel_code.Name,
+					'Name' : {
+						'Keyword': 'Center Panel',
+						'Value': this.drawerData.centerpanel_code.Name,
+					},
 					'Cols' : {
 						'Door' : this.drawerData.centerpanel_code.DoorCost,
 						'Tall' : this.drawerData.centerpanel_code.TallDoorCost,
@@ -473,10 +498,12 @@
 						'FinInts' : this.drawerData.centerpanel_code.FinishedInteriorCost,
 						'P1sq' : this.drawerData.centerpanel_code.Panel1SSqFtCost,
 						'P2sq' : this.drawerData.centerpanel_code.Panel2SSqFtCost,
-					}}
+					}
 				}, {
-					'Outside Profile' : {
-						'Name' : this.drawerData.outside_code.Name,
+					'Name' : {
+						'Keyword': 'Outside Profile',
+						'Value': this.drawerData.outside_code.Name,
+					},
 					'Cols' : {
 						'Door' : this.drawerData.outside_code.DoorCost,
 						'Tall' : this.drawerData.outside_code.TallDoorCost,
@@ -492,10 +519,12 @@
 						'FinInts' : this.drawerData.outside_code.FinishedInteriorCost,
 						'P1sq' : this.drawerData.outside_code.Panel1SSqFtCost,
 						'P2sq' : this.drawerData.outside_code.Panel2SSqFtCost,
-					}}
+					}
 				}, {
-					'Stile Rail' : {
-						'Name' : this.drawerData.stilerail_code.Name,
+					'Name' : {
+						'Keyword': 'Stile Rail',
+						'Value': this.drawerData.stilerail_code.Name,
+					},
 					'Cols' : {
 						'Door' : this.drawerData.stilerail_code.DoorCost,
 						'Tall' : this.drawerData.stilerail_code.TallDoorCost,
@@ -511,10 +540,12 @@
 						'FinInts' : this.drawerData.stilerail_code.FinishedInteriorCost,
 						'P1sq' : this.drawerData.stilerail_code.Panel1SSqFtCost,
 						'P2sq' : this.drawerData.stilerail_code.Panel2SSqFtCost,
-					}}
+					}
 				}, {
-					'Hardware' : {
-						'Name' : this.drawerData.hardware_code.Name,
+					'Name' : {
+						'Keyword': 'Hardware',
+						'Value': this.drawerData.hardware_code.Name,
+					},
 					'Cols' : {
 						'Door' : this.drawerData.hardware_code.DoorCost,
 						'Tall' : this.drawerData.hardware_code.TallDoorCost,
@@ -530,10 +561,12 @@
 						'FinInts' : this.drawerData.hardware_code.FinishedInteriorCost,
 						'P1sq' : this.drawerData.hardware_code.Panel1SSqFtCost,
 						'P2sq' : this.drawerData.hardware_code.Panel2SSqFtCost,
-					}}
+					}
 				}, {
-					'Material' : {
-						'Name' : this.setMaterial.Name,
+					'Name' : {
+						'Keyword': 'Material',
+						'Value': this.setMaterial.Name,
+					},
 					'Cols' : {
 						'Door' : this.setMaterial.DoorCost,
 						'Tall' : this.setMaterial.TallDoorCost,
@@ -549,10 +582,12 @@
 						'FinInts' : this.setMaterial.FinishedInteriorCost,
 						'P1sq' : this.setMaterial.Panel1SSqFtCost,
 						'P2sq' : this.setMaterial.Panel2SSqFtCost,
-					}}
+					}
 				}, {
-					'Color' : {
-						'Name' : this.setColor.Name,
+					'Name' : {
+						'Keyword': 'Color',
+						'Value': this.setColor.Name,
+					},
 					'Cols' : {
 						'Door' : this.setColor.DoorCost,
 						'Tall' : this.setColor.TallDoorCost,
@@ -568,10 +603,12 @@
 						'FinInts' : this.setColor.FinishedInteriorCost,
 						'P1sq' : this.setColor.Panel1SSqFtCost,
 						'P2sq' : this.setColor.Panel2SSqFtCost,
-					}}
+					}
 				}, {
-					'Finish' : {
-						'Name' : this.setFinish.Name,
+					'Name' : {
+						'Keyword': 'Finish',
+						'Value': this.setFinish.Name,
+					},
 					'Cols' : {
 						'Door' : this.setFinish.DoorCost,
 						'Tall' : this.setFinish.TallDoorCost,
@@ -587,7 +624,7 @@
 						'FinInts' : this.setFinish.FinishedInteriorCost,
 						'P1sq' : this.setFinish.Panel1SSqFtCost,
 						'P2sq' : this.setFinish.Panel2SSqFtCost,
-					}}
+					}
 				}];
 				this.displayPrice = true;
 			},
@@ -612,7 +649,6 @@
 				this.setFMaterial =  {Name: 'Select Material...'};
 			},
 			get_Styles_CMaterial (brand_id) {
-
 				this.$vs.loading();
 				this.initSelect();
 				const payload = {
@@ -629,6 +665,7 @@
 							this.setStyle =  {Name: 'Select Style Group...'};
 						}
 						this.getDoors(this.styles_cmaterial.styles[5]);
+						 
 						this.$vs.loading.close();
 
 					})
@@ -650,6 +687,7 @@
 						const found = this.doors.find(element => element.ID == this.setStyle.SpecDefault);
 						this.setDoor = found;
 						this.getMaterial(found);
+						 
 						this.$vs.loading.close();
 					})
 					.catch( error => {
@@ -673,7 +711,7 @@
 						const foundMaterial = this.materials.Material.find(element => element.ID == this.setDoor.DefaultMaterial);
 						const foundDrawer = this.materials.Drawer.find(element => element.ID == this.setDoor.DefaultDrawer);
 						const foundLDrawer = this.materials.LgDrawer.find(element => element.ID == this.setDoor.DefaultLgDrawer);
-
+						// console.log(this.materials.Material);
 						this.setSDrawer = foundDrawer;
 						this.setLDrawer = this.materials.LgDrawer[0];
 						this.setMaterial = foundMaterial;
@@ -684,6 +722,7 @@
 						}
 
 						this.getColor(this.setMaterial);
+						 
 						this.$vs.loading.close();
 					})
 					.catch( error => {
@@ -703,6 +742,7 @@
 					.then((response) => {
 						this.setColor = this.colors[0];
 						this.getFinish(this.setColor);
+						 
 						this.$vs.loading.close();
 					})
 					.catch( error => {
@@ -722,6 +762,7 @@
 					.then((response) => {
 						this.setFinish = this.finish[0];
 						this.getEdge(this.setFinish);
+						 
 						this.$vs.loading.close();
 					})
 					.catch( error => {
@@ -767,6 +808,7 @@
 						}
 
 						this.getInitModal();
+						 
 						this.$vs.loading.close();
 					})
 					.catch( error => {
@@ -777,7 +819,6 @@
 				event.target.src = "/images/1x1.png" 
 			},
 			getInitModal() {
-
 				const payload = {
 					Inside: this.setDoor.InsideProfileID,
 					Outside: this.setDoor.OutsideProfileID,
@@ -793,8 +834,7 @@
 					hardware: this.setDoor.DefaultHardware,
 				}
 				this.$vs.loading();
-				console.log('start init modal');
-				var inside_radio = {Code: ''}, outside_radio = {Code: ''}, centerpanel_radio = {Code: ''}, hardware_radio = {Code: ''}, stilerail_radio = {Code: ''};
+				var inside_radio = {'Code': ''}, outside_radio = {'Code': ''}, centerpanel_radio = {'Code': ''}, hardware_radio = {'Code': ''}, stilerail_radio = {'Code': ''};
 				this.$store.dispatch('job/fetchProfiles', payload)
 					.then(()=>{
 						this.optionsVal.doorName=this.setDoor.Name;
@@ -838,9 +878,8 @@
 							hardware_code: hardware_radio ,
 							stilerail_code: stilerail_radio ,
 						};
-						console.log('payload1', payload1);
 						this.$store.dispatch('job/setDrawerdatas', payload1)
-						console.log('store', this.drawerData);
+						 
 						this.$vs.loading.close();
 					})
 					.catch(error => {

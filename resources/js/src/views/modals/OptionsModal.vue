@@ -135,10 +135,10 @@ export default {
     },
     submitTodo () {
       var tmp='';
-      tmp += (this.inside_radio ? this.inside_radio.Code + ' ' : '');
-      tmp += (this.stilerail_radio ? this.stilerail_radio.Code + ' ' : '');
-      tmp += (this.centerpanel_radio ? this.centerpanel_radio.Code + ' ' : '');
-      tmp += (this.outside_radio ? this.outside_radio.Code : '');
+      tmp += (this.inside_radio.Code ? this.inside_radio.Code + ' ' : '');
+      tmp += (this.stilerail_radio.Code ? this.stilerail_radio.Code + ' ' : '');
+      tmp += (this.centerpanel_radio.Code ? this.centerpanel_radio.Code + ' ' : '');
+      tmp += (this.outside_radio.Code ? this.outside_radio.Code : '');
 
       const payload = {
         door_code: tmp,
@@ -148,7 +148,9 @@ export default {
         hardware_code: this.hardware_radio,
         stilerail_code: this.stilerail_radio,
       };
-      console.log(payload);
+      // console.log(payload, this.inside_radio);
+      // console.log(this.outside_radio);
+      // console.log(this.optionsVal.inside);
       this.$store.dispatch('job/setDrawerdatas', payload);
     },
     imageLoadError(event) {
